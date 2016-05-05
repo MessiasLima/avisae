@@ -47,13 +47,16 @@ public class TestActivity extends AppCompatActivity {
         //Controles do Bluetooth
         switchBT = (Switch) findViewById(R.id.sw_bt);
         final BluetoothSettings bluetoothSettings = new BluetoothSettings(this);
-        switchBT.setChecked(bluetoothSettings.isBluetoothEnabled());
-        switchBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bluetoothSettings.setBluetoothEnabled(switchBT.isChecked());
-            }
-        });
+        switchBT.setEnabled(bluetoothSettings.isBluetoothAvailable());
+        if (bluetoothSettings.isBluetoothAvailable()) {
+            switchBT.setChecked(bluetoothSettings.isBluetoothEnabled());
+            switchBT.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bluetoothSettings.setBluetoothEnabled(switchBT.isChecked());
+                }
+            });
+        }
 
 
     }

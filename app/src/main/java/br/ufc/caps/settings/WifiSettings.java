@@ -7,11 +7,12 @@ import android.net.wifi.WifiManager;
  * Created by messias on 5/5/16.
  *
  * @author Messias Lima
- *         <p/>
+ *         <p>
  *         Classe responsável pelo acesso ao Wifi
  */
 public class WifiSettings {
     WifiManager wifiManager;
+
     /**
      * Cria objeto de manipulação do Wifi
      */
@@ -34,4 +35,5 @@ public class WifiSettings {
     public boolean setWifiEnabled(boolean enable) {
         return wifiManager.setWifiEnabled(enable);
     }
+
 }

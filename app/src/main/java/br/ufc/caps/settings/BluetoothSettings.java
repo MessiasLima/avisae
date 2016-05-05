@@ -8,17 +8,19 @@ import android.content.Context;
  * Created by messias on 5/5/16.
  *
  * @author Messias Lima
- *         <p/>
+ *         <p>
  *         Classe responsável pelo acesso ao Bluetooth
  */
 public class BluetoothSettings {
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothManager bluetoothManager;
+    private Context context;
 
     /**
      * Cria objeto de manipulação do Bluetooth
      */
     public BluetoothSettings(Context context) {
+        this.context = context;
         bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
     }
@@ -41,5 +43,12 @@ public class BluetoothSettings {
         } else {
             return bluetoothAdapter.disable();
         }
+    }
+
+    /**
+     * Verifica se existe bluetooth
+     */
+    public boolean isBluetoothAvailable() {
+        return bluetoothAdapter != null;
     }
 }
