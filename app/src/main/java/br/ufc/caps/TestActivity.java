@@ -1,21 +1,19 @@
 package br.ufc.caps;
 
-import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 
+import br.ufc.caps.settings.BluetoothSettings;
 import br.ufc.caps.settings.WifiSettings;
 
 /**
  * Essa Activity foi criada apenas para testar as funcionalidades criadas e não deve ser usada na versão final do app
  * TODO:Modo Avião;
- * TODO:Wifi;
+ * Feito: Wifi;
  * TODO:3G;
- * TODO:Bluetooth;
+ * Feito: Bluetooth;
  * TODO:Ringtone(Ligação)
  * TODO:Vibração(Ligação)
  * TODO:Brilho de Tela
@@ -23,7 +21,7 @@ import br.ufc.caps.settings.WifiSettings;
  */
 public class TestActivity extends AppCompatActivity {
 
-    Switch switchWifi;
+    Switch switchWifi, switchBT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +32,8 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
+
+        //Controle do Wifi
         switchWifi = (Switch) findViewById(R.id.sw_wifi);
         final WifiSettings wifiSettings = new WifiSettings(this);
         switchWifi.setChecked(wifiSettings.isWifiEnabled());
@@ -43,5 +43,18 @@ public class TestActivity extends AppCompatActivity {
                 wifiSettings.setWifiEnabled(switchWifi.isChecked());
             }
         });
+
+        //Controles do Bluetooth
+        switchBT = (Switch) findViewById(R.id.sw_bt);
+        final BluetoothSettings bluetoothSettings = new BluetoothSettings(this);
+        switchBT.setChecked(bluetoothSettings.isBluetoothEnabled());
+        switchBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bluetoothSettings.setBluetoothEnabled(switchBT.isChecked());
+            }
+        });
+
+
     }
 }

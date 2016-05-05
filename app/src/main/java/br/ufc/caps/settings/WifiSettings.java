@@ -12,7 +12,9 @@ import android.net.wifi.WifiManager;
  */
 public class WifiSettings {
     WifiManager wifiManager;
-
+    /**
+     * Cria objeto de manipulação do Wifi
+     */
     public WifiSettings(Context context) {
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }

@@ -18,4 +18,12 @@
         android:id="@+id/sw_wifi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth" />
+    <Switch
+        android:id="@+id/sw_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
