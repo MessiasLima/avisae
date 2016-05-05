@@ -20,5 +20,14 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        
+        //Testar Mexer no Wifi
+        //WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        //boolean enabled = wifiManager.isWifiEnabled();
+        //Log.i("Wifi","Enabled: " + enabled);
+        //wifiManager.setWifiEnabled(!enabled);
+        //Log.i("Wifi", "Enabled: " + wifiManager.isWifiEnabled());
+
+
     }
 }
