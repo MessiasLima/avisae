@@ -1,5 +1,6 @@
 package br.ufc.caps;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -57,7 +58,6 @@ public class TestActivity extends AppCompatActivity {
                 }
             });
         }
-
 
     }
 }
