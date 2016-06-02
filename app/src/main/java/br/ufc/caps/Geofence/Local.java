@@ -1,5 +1,7 @@
 package br.ufc.caps.Geofence;
+
 import com.google.android.gms.location.Geofence;
+
 /**
  * Created by Sergio Marinho on 31/05/2016.
  */
@@ -9,11 +11,16 @@ public class Local {
     public static final int NOTIFICACAO = 2;
     public static final int ALARME = 3;
 
-    private int id, aviso;
-    private String nome, tempo, texto;
-    private int favorito, ativo;// nao tem boolean no SQLite
+    private int id;
+    private int aviso;
+    private String nome;
+    private String tempo;
+    private String texto;
+    private int favorito;// nao tem boolean no SQLite
+    private int ativo;
     private float raio;
-    private double latitude, longitude;
+    private double latitude;
+    private double longitude;
 
     public Local(int id, int aviso, String nome, String tempo, String texto, int favorito, int ativo, float raio, double latitude, double longitude) {
         this.id = id;
@@ -39,6 +46,7 @@ public class Local {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 
     public int getId() {
         return id;
@@ -99,6 +107,7 @@ public class Local {
     public float getRaio() {
         return raio;
     }
+
     public void setRaio(float raio) {
         this.raio = raio;
     }

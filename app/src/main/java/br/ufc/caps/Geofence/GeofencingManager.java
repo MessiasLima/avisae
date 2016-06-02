@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Messias Lima
  */
-public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class GeofencingManager {
 
     private String TAG = "GEOFENCING MANAGER";
     // Request code to attempt to resolve Google Play services connection failures.
@@ -39,9 +39,9 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
     /**
      * Restorna sempre a mesma instancia de GeofencingManager
      */
-    public GeofencingManager getInstance(Context context) {
+    public static GeofencingManager getInstance(Context context,GoogleApiClient googleApiClient) {
         if (instance == null) {
-            instance = new GeofencingManager(context);
+            instance = new GeofencingManager(context,googleApiClient);
         }
         return instance;
     }
@@ -49,16 +49,9 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
     /**
      * Inicia e se connecta no Google API's
      */
-    private GeofencingManager(Context context) {
+    private GeofencingManager(Context context, GoogleApiClient googleApiClient) {
         this.context = context;
-        googleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
-        googleApiClient.connect();
-
+        this.googleApiClient = googleApiClient;
         geofenceList = new ArrayList<>();
     }
 
@@ -87,37 +80,13 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
     /**
      * Retira um local da lista e do Listenet
      */
-    public void renoveGeofence(Geofence geofence) {
+    public void removeGeofence(Geofence geofence) {
         geofenceList.remove(geofence);
         List<String> geofencesToRemove = new ArrayList<>();
         geofencesToRemove.add(geofence.getRequestId());
         LocationServices.GeofencingApi.removeGeofences(googleApiClient, geofencesToRemove);
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        // If the error has a resolution, start a Google Play services activity to resolve it.
-        if (connectionResult.hasResolution()) {
-            try {
-                connectionResult.startResolutionForResult(((Activity) context), CONNECTION_FAILURE_RESOLUTION_REQUEST);
-            } catch (IntentSender.SendIntentException e) {
-                Log.e(TAG, "Exception while resolving connection error.", e);
-            }
-        } else {
-            int errorCode = connectionResult.getErrorCode();
-            Log.e(TAG, "Connection to Google Play services failed with error code " + errorCode);
-        }
-    }
 
     /**
      * Cria uma pending intent que roda quando entramos em algum lugar
