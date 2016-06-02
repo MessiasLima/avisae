@@ -107,8 +107,7 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
     }
 
     /**
-     * Create a PendingIntent that triggers GeofenceTransitionIntentService when a geofence
-     * transition occurs.
+     * Cria uma pending intent que roda quando entramos em algum lugar
      */
     private PendingIntent getGeofenceTransitionPendingIntent() {
         Intent intent = new Intent(context, GeofenceIntentService.class);

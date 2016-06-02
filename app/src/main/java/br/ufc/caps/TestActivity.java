@@ -30,7 +30,13 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         initComponents();
+        testGeofencing();
     }
+
+    private void testGeofencing() {
+
+    }
+
 
     private void initComponents() {
 
