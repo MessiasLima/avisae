@@ -1,9 +1,17 @@
 package br.ufc.caps.Geofence;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,6 +28,9 @@ import java.util.List;
  */
 public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private String TAG = "GEOFENCING MANAGER";
+    // Request code to attempt to resolve Google Play services connection failures.
+    public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static GeofencingManager instance;
     private GoogleApiClient googleApiClient;
     private Context context;
@@ -35,7 +46,7 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
         return instance;
     }
 
-    private GeofencingManager(Context context){
+    private GeofencingManager(Context context) {
         this.context = context;
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API)
@@ -47,6 +58,21 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
 
         geofenceList = new ArrayList<>();
     }
+
+    public void addGeofence() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.GeofencingApi.addGeofences(googleApiClient, geofenceList, getGeofenceTransitionPendingIntent());
+    }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -60,6 +86,26 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        // If the error has a resolution, start a Google Play services activity to resolve it.
+        if (connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(((Activity) context), CONNECTION_FAILURE_RESOLUTION_REQUEST);
+            } catch (IntentSender.SendIntentException e) {
+                Log.e(TAG, "Exception while resolving connection error.", e);
+            }
+        } else {
+            int errorCode = connectionResult.getErrorCode();
+            Log.e(TAG, "Connection to Google Play services failed with error code " + errorCode);
+        }
     }
+
+    /**
+     * Create a PendingIntent that triggers GeofenceTransitionIntentService when a geofence
+     * transition occurs.
+     */
+    private PendingIntent getGeofenceTransitionPendingIntent() {
+        Intent intent = new Intent(context, GeofenceIntentService.class);
+        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
 }
