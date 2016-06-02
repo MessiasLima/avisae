@@ -59,21 +59,28 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
         geofenceList = new ArrayList<>();
     }
 
-    public void addGeofence() {
+    public void registerGeofences() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            } else {
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            }
+        } else {
+            LocationServices.GeofencingApi.addGeofences(googleApiClient, geofenceList, getGeofenceTransitionPendingIntent());
         }
-        LocationServices.GeofencingApi.addGeofences(googleApiClient, geofenceList, getGeofenceTransitionPendingIntent());
     }
 
+    public void addGeofence(Geofence geofence){
+        geofenceList.add(geofence);
+    }
 
+    public void renoveGeofence(Geofence geofence){
+        geofenceList.remove(geofence);
+        List<String> geofencesToRemove = new ArrayList<>();
+        geofencesToRemove.add(geofence.getRequestId());
+        LocationServices.GeofencingApi.removeGeofences(googleApiClient,geofencesToRemove);
+    }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
