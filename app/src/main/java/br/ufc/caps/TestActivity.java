@@ -34,7 +34,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void testGeofencing() {
-
+        //TODO: testar Geofence
     }
 
 
