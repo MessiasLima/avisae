@@ -15,23 +15,12 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 
-import br.ufc.caps.Database.BD;
-import br.ufc.caps.Geofence.GeofencingManager;
-import br.ufc.caps.Geofence.Local;
+import br.ufc.caps.database.BD;
+import br.ufc.caps.geofence.GeofencingManager;
+import br.ufc.caps.geofence.Local;
 import br.ufc.caps.settings.BluetoothSettings;
 import br.ufc.caps.settings.WifiSettings;
 
-/**
- * Essa Activity foi criada apenas para testar as funcionalidades criadas e não deve ser usada na versão final do app
- * TODO:Modo Avião;
- * Feito: Wifi;
- * TODO:3G;
- * Feito: Bluetooth;
- * TODO:Ringtone(Ligação)
- * TODO:Vibração(Ligação)
- * TODO:Brilho de Tela
- * TODO:Wallpaper
- */
 public class TestActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 

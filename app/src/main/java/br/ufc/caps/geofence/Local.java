@@ -1,4 +1,4 @@
-package br.ufc.caps.Geofence;
+package br.ufc.caps.geofence;
 
 import com.google.android.gms.location.Geofence;
 

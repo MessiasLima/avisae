@@ -1,11 +1,11 @@
-package br.ufc.caps.Database;
+package br.ufc.caps.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
-import br.ufc.caps.Geofence.Local;
+import br.ufc.caps.geofence.Local;
 
 /**
  * Created by Sergio Marinho on 31/05/2016.

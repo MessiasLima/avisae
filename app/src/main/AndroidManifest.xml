@@ -25,7 +25,7 @@
         </activity>
 
         <service
-            android:name=".Geofence.GeofenceIntentService"
+            android:name=".geofence.GeofenceIntentService"
             android:exported="false"></service>
     </application>
 

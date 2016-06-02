@@ -1,4 +1,4 @@
-package br.ufc.caps.Geofence;
+package br.ufc.caps.geofence;
 
 import android.app.IntentService;
 import android.content.Intent;

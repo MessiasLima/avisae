@@ -1,4 +1,4 @@
-package br.ufc.caps.Database;
+package br.ufc.caps.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
