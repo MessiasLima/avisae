@@ -14,10 +14,14 @@ import com.google.android.gms.location.GeofencingEvent;
 
 public class GeofenceIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private String TAG = "GEOFENCING INTENT SERVICE";
+
     public GeofenceIntentService() {
         super(GeofenceIntentService.class.getSimpleName());
     }
 
+    /**
+     * Metdo que executa quando o usuário entra no local definido
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent geoFenceEvent = GeofencingEvent.fromIntent(intent);
@@ -27,7 +31,7 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
         } else {
             //TODO: Ação de quando entrar num local
             Geofence geofence = geoFenceEvent.getTriggeringGeofences().get(0);
-            Log.e(TAG,"Geofence Triggered: "+geofence.getRequestId());
+            Log.e(TAG, "Geofence Triggered: " + geofence.getRequestId());
         }
     }
 

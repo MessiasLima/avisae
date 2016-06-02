@@ -46,6 +46,9 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
         return instance;
     }
 
+    /**
+     * Inicia e se connecta no Google API's
+     */
     private GeofencingManager(Context context) {
         this.context = context;
         googleApiClient = new GoogleApiClient.Builder(context)
@@ -59,6 +62,9 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
         geofenceList = new ArrayList<>();
     }
 
+    /**
+     * Adiciona a lista de locais no listenet. A partir daqui, a API começa a monitorar os locais
+     */
     public void registerGeofences() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -71,16 +77,23 @@ public class GeofencingManager implements GoogleApiClient.ConnectionCallbacks, G
         }
     }
 
-    public void addGeofence(Geofence geofence){
+    /**
+     * Adiciona o local na lista de locais
+     */
+    public void addGeofence(Geofence geofence) {
         geofenceList.add(geofence);
     }
 
-    public void renoveGeofence(Geofence geofence){
+    /**
+     * Retira um local da lista e do Listenet
+     */
+    public void renoveGeofence(Geofence geofence) {
         geofenceList.remove(geofence);
         List<String> geofencesToRemove = new ArrayList<>();
         geofencesToRemove.add(geofence.getRequestId());
-        LocationServices.GeofencingApi.removeGeofences(googleApiClient,geofencesToRemove);
+        LocationServices.GeofencingApi.removeGeofences(googleApiClient, geofencesToRemove);
     }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
