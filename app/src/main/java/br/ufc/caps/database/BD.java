@@ -124,4 +124,26 @@ public class BD {
         fechaConexao();
         return retorno;
     }
+    public Local buscar(String nome){
+        ArrayList<Local> todos = buscar();
+        if(!todos.isEmpty()){
+            for(Local l:todos){
+                if(l.getNome().equals(nome)){
+                    return l;
+                }
+            }
+        }
+        return null;
+    }
+    public Local buscar(int id){
+        ArrayList<Local> todos = buscar();
+        if(!todos.isEmpty()){
+            for(Local l:todos){
+                if(l.getId()==id){
+                    return l;
+                }
+            }
+        }
+        return null;
+    }
 }
