@@ -12,6 +12,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
+import br.ufc.caps.database.BD;
+import br.ufc.caps.util.NotificationUtil;
+
 public class GeofenceIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private String TAG = "GEOFENCING INTENT SERVICE";
 
@@ -29,9 +32,17 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
             int errorCode = geoFenceEvent.getErrorCode();
             Log.e(TAG, "Location Services error: " + errorCode);
         } else {
-            //TODO: Ação de quando entrar num local
-            Geofence geofence = geoFenceEvent.getTriggeringGeofences().get(0);
-            Log.e(TAG, "Geofence Triggered: " + geofence.getRequestId());
+            for (Geofence geofence : geoFenceEvent.getTriggeringGeofences()) {
+                BD database = new BD(this);
+                Local local = database.buscar(geofence.getRequestId());
+                if (local.getAtivo()==Local.VERDADEIRO){
+                    if (local.getAviso()==Local.NOTIFICACAO){
+                        NotificationUtil.sendNotification(local.getNome(),local.getTexto(),this,local);
+                    }else{
+
+                    }
+                }
+            }
         }
     }
 

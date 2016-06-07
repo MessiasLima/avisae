@@ -2,10 +2,14 @@ package br.ufc.caps.geofence;
 
 import com.google.android.gms.location.Geofence;
 
+import java.io.Serializable;
+
 /**
  * Created by Sergio Marinho on 31/05/2016.
+ * @author Sergio Marinho
  */
-public class Local {
+public class Local{
+    public static final String KEY = "LOCAL";
     public static final int FALSO = 0;
     public static final int VERDADEIRO = 1;
     public static final int NOTIFICACAO = 2;
@@ -47,6 +51,7 @@ public class Local {
         this.longitude = longitude;
     }
 
+    public Local(){};
 
     public int getId() {
         return id;
@@ -133,9 +138,9 @@ public class Local {
      */
     public Geofence getGeofence() {
         return new Geofence.Builder()
-                .setRequestId(nome)
+                .setRequestId(this.nome)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                .setCircularRegion(latitude, longitude, raio)
+                .setCircularRegion(this.latitude, this.longitude, this.raio)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .build();
     }

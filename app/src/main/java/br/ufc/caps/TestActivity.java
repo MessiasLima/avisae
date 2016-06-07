@@ -21,8 +21,7 @@ import br.ufc.caps.geofence.Local;
 import br.ufc.caps.settings.BluetoothSettings;
 import br.ufc.caps.settings.WifiSettings;
 
-public class TestActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class TestActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     Switch switchWifi, switchBT;
     GoogleApiClient googleApiClient;
@@ -44,17 +43,22 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
 
         googleApiClient.connect();
 
-        testDatabase();
+        //testDatabase();
         initComponents();
     }
 
     private void testDatabase() {
         //EXEMPLO
         BD bd = new BD(this);
-        bd.adicionar(new Local(Local.ALARME, "aasaa", "adsdsa", "aaddf", 1, 1, 1, 1.7, 1.7));
-        bd.adicionar(new Local(Local.ALARME, "abshabs", "abshabs", "asyags", 1, 1, 1, 1.7, 1.7));
+        // bd.adicionar(new Local(Local.ALARME, "aasaa", "adsdsa", "aaddf", 1, 1, 1, 1.7, 1.7));
+        // bd.adicionar(new Local(Local.ALARME, "abshabs", "abshabs", "asyags", 1, 1, 1, 1.7, 1.7));
         //bd.adicionar(new Local(Local.ALARME,"asa","asa","asa",1,1,1,1.7,1.7));
         ArrayList<Local> t = bd.buscar();
+
+        for (Local l : t) {
+            Log.e(TAG, l.getId() + l.getNome());
+        }
+
         bd.atualizar((new Local(t.get(0).getId(), Local.ALARME, "hausa", "sjais", "ansa", 1, 1, 1, 1.7, 1.7)));
         Log.e("eiiiiiiiiiiiiiii", t.size() + "");
         boolean b = bd.excluir(t.get(1));
@@ -65,7 +69,24 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void testGeofencing() {
         //TODO: testar Geofence
-        Geofence localGeofence = new Local(Local.NOTIFICACAO, "Residencia Universitaria", "15;17", "Deu certo fi", Local.FALSO, Local.VERDADEIRO, 60, -3.739984, -38.569949).getGeofence();
+        //Local local = new Local(Local.NOTIFICACAO, "15;17", "Residencia Universitaria", "Deu certo fi", Local.FALSO, Local.VERDADEIRO, 60, -3.739984, -38.569949);
+        Local local = new Local();
+        local.setAviso(Local.NOTIFICACAO);
+        local.setTempo("15;17");
+        local.setNome("Residencia Universitaria");
+        local.setTexto("Testing... 123");
+        local.setFavorito(Local.FALSO);
+        local.setAtivo(Local.VERDADEIRO);
+        local.setRaio(60f);
+        local.setLatitude(-3.739984d);
+        local.setLongitude(-38.569949d);
+
+        BD bd = new BD(this);
+        if (bd.buscar(local.getNome()) == null) {
+            bd.adicionar(local);
+        }
+
+        Geofence localGeofence = local.getGeofence();
         GeofencingManager geofencingManager = GeofencingManager.getInstance(this, googleApiClient);
         geofencingManager.addGeofence(localGeofence);
         geofencingManager.registerGeofences();
