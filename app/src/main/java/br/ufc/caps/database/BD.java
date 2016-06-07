@@ -4,13 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import br.ufc.caps.geofence.Local;
 
 /**
  * Created by Sergio Marinho on 31/05/2016.
+ * @author Sergio Marinho
  */
-public class BD {
+public class BD implements Serializable{
     private SQLiteDatabase bd;
     private Context ctx;
     public BD(Context ctx) {
@@ -95,7 +98,7 @@ public class BD {
     public ArrayList<Local> buscar(){//esse é só exemplo, to retornando só o primeiro
         abreConexao();
         ArrayList<Local> retorno= new ArrayList<Local>();
-        String[] colunas = new String[]{"id","aviso","nome","tempo","texto","ativo","favorito","raio","latitude","longitude"};
+        String[] colunas = new String[]{"id","aviso","tempo","nome","texto","ativo","favorito","raio","latitude","longitude"};
         Cursor cursor = bd.query("local", colunas,null,null,null,null,null);//quem estudou bd sabe oq sao esses null || esse cursor é tipo um resultset
         if(cursor.getCount()>0){
             cursor.moveToFirst();
