@@ -71,7 +71,7 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
         //TODO: testar Geofence
         //Local local = new Local(Local.NOTIFICACAO, "15;17", "Residencia Universitaria", "Deu certo fi", Local.FALSO, Local.VERDADEIRO, 60, -3.739984, -38.569949);
         Local local = new Local();
-        local.setAviso(Local.NOTIFICACAO);
+        local.setAviso(Local.ALARME);
         local.setTempo("15;17");
         local.setNome("Residencia Universitaria");
         local.setTexto("Testing... 123");

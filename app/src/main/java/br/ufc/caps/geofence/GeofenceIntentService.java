@@ -3,6 +3,7 @@ package br.ufc.caps.geofence;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +12,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
+
+import java.util.Calendar;
 
 import br.ufc.caps.database.BD;
 import br.ufc.caps.util.NotificationUtil;
@@ -39,8 +42,16 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
                     if (local.getAviso()==Local.NOTIFICACAO){
                         NotificationUtil.sendNotification(local.getNome(),local.getTexto(),this,local);
                     }else{
-
+                        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+                        i.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
+                        i.putExtra(AlarmClock.EXTRA_HOUR, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                        i.putExtra(AlarmClock.EXTRA_MINUTES, Calendar.getInstance().get(Calendar.MINUTE)+1);
+                        i.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
                     }
+                    local.setAtivo(Local.FALSO);
+                    database.atualizar(local);
                 }
             }
         }
