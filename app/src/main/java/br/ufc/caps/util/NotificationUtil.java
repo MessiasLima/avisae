@@ -29,14 +29,15 @@ public class NotificationUtil {
     public static void sendNotification(String title, String text, Context context, Local local) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Intent intent = new Intent(context, LocalDetail.class);
-       // intent.putExtra(Local.KEY, local);
+        intent.putExtra(Local.KEY, local);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setVibrate(new long[]{500, 1000, 500, 1000, 500})
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         getNotificationManager(context).notify((int) Math.random() * 10, builder.build());
     }

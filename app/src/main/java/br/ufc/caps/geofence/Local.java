@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Sergio Marinho on 31/05/2016.
  * @author Sergio Marinho
  */
-public class Local{
+public class Local implements Serializable{
     public static final String KEY = "LOCAL";
     public static final int FALSO = 0;
     public static final int VERDADEIRO = 1;
