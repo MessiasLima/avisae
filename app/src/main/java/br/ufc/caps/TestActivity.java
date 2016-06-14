@@ -81,6 +81,7 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
         local.setLatitude(-3.739984d);
         local.setLongitude(-38.569949d);
 
+
         BD bd = new BD(this);
         if (bd.buscar(local.getNome()) == null) {
             bd.adicionar(local);

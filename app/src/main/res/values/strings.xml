@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">C.A.P.S.</string>
     <string name="bluetooth_not_available">BLuetooth não disponível</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

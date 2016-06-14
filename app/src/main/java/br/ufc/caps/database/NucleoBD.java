@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by Sergio Marinho on 31/05/2016.
+ * @author Sergio Marinho
  */
 public class NucleoBD extends SQLiteOpenHelper{
     private static final String NOME_BD = "bancoso_gps";

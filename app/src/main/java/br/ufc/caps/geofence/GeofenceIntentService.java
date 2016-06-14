@@ -38,15 +38,15 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
             for (Geofence geofence : geoFenceEvent.getTriggeringGeofences()) {
                 BD database = new BD(this);
                 Local local = database.buscar(geofence.getRequestId());
-                if (local.getAtivo()==Local.VERDADEIRO){
-                    if (local.getAviso()==Local.NOTIFICACAO){
-                        NotificationUtil.sendNotification(local.getNome(),local.getTexto(),this,local);
-                    }else{
+                if (local.getAtivo() == Local.VERDADEIRO) {
+                    if (local.getAviso() == Local.NOTIFICACAO) {
+                        NotificationUtil.sendNotification(local.getNome(), local.getTexto(), this, local);
+                    } else {
                         Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
                         i.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
                         i.putExtra(AlarmClock.EXTRA_HOUR, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-                        i.putExtra(AlarmClock.EXTRA_MINUTES, Calendar.getInstance().get(Calendar.MINUTE)+1);
-                        i.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+                        i.putExtra(AlarmClock.EXTRA_MINUTES, Calendar.getInstance().get(Calendar.MINUTE) + 1);
+                        i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                     }
