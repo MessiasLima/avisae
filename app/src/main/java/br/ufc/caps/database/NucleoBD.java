@@ -18,7 +18,7 @@ public class NucleoBD extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table local(id integer primary key autoincrement, aviso integer not null, tempo text not null, nome text unique not null, texto text not null, ativo integer not null, favorito integer not null, raio real not null, latitude real not null, longitude real not null)");
+        db.execSQL("create table local(id integer primary key autoincrement, aviso integer not null, tempo text not null, nome text unique not null, texto text not null, ativo integer not null, favorito integer not null, raio real not null, latitude real not null, longitude real not null, imagem integer not null)");
     }
 
     @Override

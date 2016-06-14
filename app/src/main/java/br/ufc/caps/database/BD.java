@@ -38,6 +38,7 @@ public class BD implements Serializable{
         linha.put("raio",l.getRaio());
         linha.put("latitude",l.getLatitude());
         linha.put("longitude",l.getLongitude());
+        linha.put("imagem",l.getImagem());
         bd.insert("local",null, linha);// nome da tabela, uma variavel ai para caso especifico de insercao com todas as colunas nulas> vo ver isso melhor ,valores para a coluna
         fechaConexao();
     }
@@ -55,6 +56,7 @@ public class BD implements Serializable{
             linha.put("raio",l.getRaio());
             linha.put("latitude",l.getLatitude());
             linha.put("longitude",l.getLongitude());
+            linha.put("imagem",l.getImagem());
             alterados=bd.update("local",linha,"id="+l.getId(),null);//tabela,valores a trocar,condicao, valores das condicoes
             fechaConexao();
             if(alterados!=0){
@@ -98,13 +100,13 @@ public class BD implements Serializable{
     public ArrayList<Local> buscar(){//esse é só exemplo, to retornando só o primeiro
         abreConexao();
         ArrayList<Local> retorno= new ArrayList<Local>();
-        String[] colunas = new String[]{"id","aviso","tempo","nome","texto","ativo","favorito","raio","latitude","longitude"};
+        String[] colunas = new String[]{"id","aviso","tempo","nome","texto","ativo","favorito","raio","latitude","longitude","imagem"};
         Cursor cursor = bd.query("local", colunas,null,null,null,null,null);//quem estudou bd sabe oq sao esses null || esse cursor é tipo um resultset
         if(cursor.getCount()>0){
             cursor.moveToFirst();
             Local l;
             //id, aviso, tempo, nome, texto, ativo, favorito, raio, latitude, longitude
-            int id, aviso;
+            int id, aviso, imagem;
             String nome, tempo, texto;
             int favorito, ativo;
             float raio;
@@ -120,7 +122,8 @@ public class BD implements Serializable{
                 raio = cursor.getFloat(7);
                 latitude = cursor.getDouble(8);
                 longitude = cursor.getDouble(9);
-                l = new Local(id,aviso, nome, tempo, texto,favorito,ativo,raio,latitude,longitude);
+                imagem = cursor.getInt(10);
+                l = new Local(id,aviso, nome, tempo, texto,favorito,ativo,raio,latitude,longitude,imagem);
                 retorno.add(l);
             }while(cursor.moveToNext());
         }

@@ -25,8 +25,9 @@ public class Local implements Serializable{
     private float raio;
     private double latitude;
     private double longitude;
+    private int imagem;
 
-    public Local(int id, int aviso, String nome, String tempo, String texto, int favorito, int ativo, float raio, double latitude, double longitude) {
+    public Local(int id, int aviso, String nome, String tempo, String texto, int favorito, int ativo, float raio, double latitude, double longitude, int imagem) {
         this.id = id;
         this.aviso = aviso;
         this.nome = nome;
@@ -37,9 +38,10 @@ public class Local implements Serializable{
         this.raio = raio;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.imagem = imagem;
     }
 
-    public Local(int aviso, String nome, String tempo, String texto, int favorito, int ativo, float raio, double latitude, double longitude) {
+    public Local(int aviso, String nome, String tempo, String texto, int favorito, int ativo, float raio, double latitude, double longitude, int imagem) {
         this.aviso = aviso;
         this.nome = nome;
         this.tempo = tempo;
@@ -49,6 +51,7 @@ public class Local implements Serializable{
         this.raio = raio;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.imagem = imagem;
     }
 
     public Local(){};
@@ -131,6 +134,14 @@ public class Local implements Serializable{
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(int imagem) {
+        this.imagem = imagem;
     }
 
     /**

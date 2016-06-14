@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import br.ufc.caps.recyclerView.LocalCustomAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    BD dataBase;
+    private RecyclerView recyclerView;
+    private BD dataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         local.setRaio(60f);
         local.setLatitude(-3.739984d);
         local.setLongitude(-38.569949d);
+        local.setImagem(1);
 
         Local local2 = new Local();
         local2.setAviso(Local.ALARME);
@@ -80,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         local2.setRaio(60f);
         local2.setLatitude(-3.739984d);
         local2.setLongitude(-38.569949d);
+        local2.setImagem(2);
+
+        Local l = dataBase.buscar(2);
+        Log.e("imagem é:",l.getImagem()+"");
 
 
         locals.add(local);

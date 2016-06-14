@@ -59,7 +59,7 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
             Log.e(TAG, l.getId() + l.getNome());
         }
 
-        bd.atualizar((new Local(t.get(0).getId(), Local.ALARME, "hausa", "sjais", "ansa", 1, 1, 1, 1.7, 1.7)));
+        //bd.atualizar((new Local(t.get(0).getId(), Local.ALARME, "hausa", "sjais", "ansa", 1, 1, 1, 1.7, 1.7)));
         Log.e("eiiiiiiiiiiiiiii", t.size() + "");
         boolean b = bd.excluir(t.get(1));
         t = bd.buscar();
