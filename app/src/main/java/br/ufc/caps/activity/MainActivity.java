@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.caps.R;
@@ -84,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
         local2.setLongitude(-38.569949d);
         local2.setImagem(2);
 
-        Local l = dataBase.buscar(2);
-        Log.e("imagem é:",l.getImagem()+"");
-
-
         locals.add(local);
         locals.add(local2);
+        dataBase.adicionar(local);
+        dataBase.adicionar(local2);
+
+        ArrayList<Local> l = dataBase.buscar();
+        Log.e("imagem é:", l.get(0).getImagem() + "");
 
         LocalCustomAdapter customAdapter = new LocalCustomAdapter(this,locals);
         recyclerView.setAdapter(customAdapter);
