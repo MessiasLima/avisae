@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +11,151 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.ufc.caps.activity.NewLocalActivity">
+    tools:context="br.ufc.caps.activity.NewLocalActivity"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nomeLocal"
+        android:hint="Digite o nome desse aviso aqui"
+        android:maxLength="50"
+        android:paddingBottom="6dp"/>
+    <View
+        android:paddingTop="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Horário"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:paddingBottom="4dp"
+        android:textColor="#000000"
+        />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dia Todo:"/>
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/diaTodo"
+                android:layout_gravity="right"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Início" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:gravity="right"
+                android:id="@+id/horarioInicial"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fim" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:gravity="right"
+                android:id="@+id/horarioFinal"/>
+        </TableRow>
+    </TableLayout>
+    <View
+        android:paddingTop="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:paddingBottom="4dp"
+        android:textColor="#000000"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Escolher Local"
+        android:id="@+id/botaoEscolherLugar"/>
+    <View
+        android:paddingTop="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recado"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:paddingBottom="4dp"
+        android:textColor="#000000"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="4"
+        android:maxLength="140"
+        android:hint="Digite aqui o que gostará de ser lembrado..."
+        android:id="@+id/textoRecado"/>
+    <View
+        android:paddingTop="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forma"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:paddingBottom="4dp"
+        android:textColor="#000000"
+        />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alarme"
+            android:id="@+id/radioAlarme"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notificaçao"
+            android:id="@+id/radioNotificacao"
+            />
+    </RadioGroup>
+
+</LinearLayout>
+</ScrollView>

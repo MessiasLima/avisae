@@ -1,5 +1,6 @@
 package br.ufc.caps.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
@@ -55,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         if(dataBase ==null){
             dataBase = new BD(this);
         }
-
-        List<Local> locals =  dataBase.buscar();
 
         // Estou adicionando esse dois lugarem manualmente só pra fins de teste
         // Quando terminar o periodo de desenvolvimento, apagar essas linhas
@@ -85,14 +84,15 @@ public class MainActivity extends AppCompatActivity {
         local2.setLongitude(-38.569949d);
         local2.setImagem(2);
 
-        locals.add(local);
-        locals.add(local2);
         dataBase.adicionar(local);
         dataBase.adicionar(local2);
 
-        ArrayList<Local> l = dataBase.buscar();
-        Log.e("imagem é:", l.get(0).getImagem() + "");
+        mostraCardsNaTela();
+        Log.e("oi","haha");
+    }
 
+    public void mostraCardsNaTela(){
+        List<Local> locals =  dataBase.buscar();
         LocalCustomAdapter customAdapter = new LocalCustomAdapter(this,locals);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
