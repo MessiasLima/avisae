@@ -28,12 +28,13 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
     @Override
     public LocalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.local_list_item, parent, false);
-        LocalViewHolder viewHolder = new LocalViewHolder(context, view);
-        return viewHolder;
+        return new LocalViewHolder(context, view);
+
     }
 
     @Override
     public void onBindViewHolder(LocalViewHolder holder, int position) {
+
         Local local = locals.get(position);
 
         holder.textViewTitle.setText(local.getNome());
