@@ -46,7 +46,8 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
         final Local local = locals.get(position);
 
         holder.textViewTitle.setText(local.getNome());
-        holder.textViewText.setText(local.getTexto());
+
+        holder.textViewText.setText(local.toString());
 
         boolean enabled = false;
         if (local.getAtivo() == Local.VERDADEIRO) {
@@ -58,10 +59,11 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
             @Override
             public void onClick(View v) {
                 Log.i("Clique", local.getNome());
-                if (expanded) {
-                    colapse(holder.cardView, holder.textBar);
+
+                if (holder.expanded) {
+                    holder.colapse();
                 } else {
-                    expand(holder.cardView, holder.textBar);
+                    holder.expand();
                 }
             }
         });
@@ -70,55 +72,6 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
     @Override
     public int getItemCount() {
         return locals.size();
-    }
-
-    public void expand(final View card, final View textBox) {
-        final int targetHeightCard = card.getHeight();
-        final int targetHeightTextBox = textBox.getHeight();
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-
-                card.getLayoutParams().height = targetHeightCard + (int) (targetHeightCard * interpolatedTime);
-                card.requestLayout();
-                textBox.getLayoutParams().height = targetHeightTextBox + (int) ((targetHeightCard) * interpolatedTime);
-                textBox.requestLayout();
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                expanded = true;
-                return true;
-            }
-        };
-        // 1dp/ms
-        a.setDuration((int) (targetHeightCard / card.getContext().getResources().getDisplayMetrics().density));
-        card.startAnimation(a);
-    }
-
-    public void colapse(final View card, final View textBox) {
-        final int targetHeightCard = card.getHeight();
-        final int targetHeightTextBox = textBox.getHeight();
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-
-                card.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE * interpolatedTime);
-                card.requestLayout();
-
-                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE) * interpolatedTime);
-                textBox.requestLayout();
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                expanded = false;
-                return true;
-            }
-        };
-        // 1dp/ms
-        a.setDuration((int) (targetHeightCard / card.getContext().getResources().getDisplayMetrics().density));
-        card.startAnimation(a);
     }
 
 }
