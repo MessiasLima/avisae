@@ -103,10 +103,10 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
 
-                card.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE / interpolatedTime);
+                card.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE * interpolatedTime);
                 card.requestLayout();
 
-                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE) / interpolatedTime);
+                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE) * interpolatedTime);
                 textBox.requestLayout();
             }
 
