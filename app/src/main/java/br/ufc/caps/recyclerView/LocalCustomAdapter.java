@@ -75,8 +75,6 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
     public void expand(final View card, final View textBox) {
         final int targetHeightCard = card.getHeight();
         final int targetHeightTextBox = textBox.getHeight();
-        Log.i("TAG", "Card initial: " + targetHeightCard +" Texbox initial: "+ targetHeightTextBox);
-
         Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
@@ -104,10 +102,11 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
         Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                card.getLayoutParams().height = targetHeightCard - (int) (targetHeightCard / interpolatedTime);
+
+                card.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE / interpolatedTime);
                 card.requestLayout();
 
-                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((targetHeightCard) / interpolatedTime);
+                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE) / interpolatedTime);
                 textBox.requestLayout();
             }
 
