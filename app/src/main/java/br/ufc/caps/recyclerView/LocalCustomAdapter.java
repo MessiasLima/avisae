@@ -2,9 +2,12 @@ package br.ufc.caps.recyclerView;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 import java.util.List;
 
@@ -17,8 +20,13 @@ import br.ufc.caps.geofence.Local;
  * @author Messias Lima
  */
 public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
+
+    private static final int CARD_INTIAL_SIZE = 300;
+    private static final int TEXT_BOX_INTIAL_SIZE =  56;
+
     Context context;
     List<Local> locals;
+    boolean expanded = false;
 
     public LocalCustomAdapter(Context context, List<Local> locals) {
         this.context = context;
@@ -33,9 +41,9 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(LocalViewHolder holder, int position) {
+    public void onBindViewHolder(final LocalViewHolder holder, int position) {
 
-        Local local = locals.get(position);
+        final Local local = locals.get(position);
 
         holder.textViewTitle.setText(local.getNome());
         holder.textViewText.setText(local.getTexto());
@@ -45,10 +53,73 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
             enabled = true;
         }
         holder.enabledSwitch.setChecked(enabled);
+
+        holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Clique", local.getNome());
+                if (expanded) {
+                    colapse(holder.cardView, holder.textBar);
+                } else {
+                    expand(holder.cardView, holder.textBar);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return locals.size();
     }
+
+    public void expand(final View card, final View textBox) {
+        final int targetHeightCard = card.getHeight();
+        final int targetHeightTextBox = textBox.getHeight();
+        Log.i("TAG", "Card initial: " + targetHeightCard +" Texbox initial: "+ targetHeightTextBox);
+
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+
+                card.getLayoutParams().height = targetHeightCard + (int) (targetHeightCard * interpolatedTime);
+                card.requestLayout();
+                textBox.getLayoutParams().height = targetHeightTextBox + (int) ((targetHeightCard) * interpolatedTime);
+                textBox.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                expanded = true;
+                return true;
+            }
+        };
+        // 1dp/ms
+        a.setDuration((int) (targetHeightCard / card.getContext().getResources().getDisplayMetrics().density));
+        card.startAnimation(a);
+    }
+
+    public void colapse(final View card, final View textBox) {
+        final int targetHeightCard = card.getHeight();
+        final int targetHeightTextBox = textBox.getHeight();
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                card.getLayoutParams().height = targetHeightCard - (int) (targetHeightCard / interpolatedTime);
+                card.requestLayout();
+
+                textBox.getLayoutParams().height = targetHeightTextBox - (int) ((targetHeightCard) / interpolatedTime);
+                textBox.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                expanded = false;
+                return true;
+            }
+        };
+        // 1dp/ms
+        a.setDuration((int) (targetHeightCard / card.getContext().getResources().getDisplayMetrics().density));
+        card.startAnimation(a);
+    }
+
 }
