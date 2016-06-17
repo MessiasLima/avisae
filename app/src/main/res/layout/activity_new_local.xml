@@ -102,14 +102,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.595"
                         android:text="Fim" />
 
                     <Button
                         android:id="@+id/horarioFinal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.405"
                         android:text="00:00" />
                 </LinearLayout>
                     </LinearLayout>
@@ -199,8 +199,9 @@
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/im1"/>
-                        <!--android:src="@drawable/album_icon"-->
+                            android:padding="0dp"
+                            android:backgroundTint="#00000000"
+                            android:src="@mipmap/ic_img1"/>
                         <ImageButton
                             android:id="@+id/botaoIm2"
                             android:layout_width="wrap_content"
@@ -208,7 +209,9 @@
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/im2"/>
+                            android:padding="0dp"
+                            android:backgroundTint="#00000000"
+                            android:src="@mipmap/ic_img2"/>
                         <ImageButton
                             android:id="@+id/botaoIm3"
                             android:layout_width="wrap_content"
@@ -216,7 +219,9 @@
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/im3"/>
+                            android:padding="0dp"
+                            android:backgroundTint="#00000000"
+                            android:src="@mipmap/ic_img3"/>
                         <ImageButton
                             android:id="@+id/botaoIm4"
                             android:layout_width="wrap_content"
@@ -224,7 +229,9 @@
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/im4"/>
+                            android:padding="0dp"
+                            android:backgroundTint="#00000000"
+                            android:src="@mipmap/ic_img4"/>
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
