@@ -85,7 +85,7 @@
                         android:layout_weight="0.6"
                         android:text="Início" />
 
-                    <TextView
+                    <Button
                         android:id="@+id/horarioInicial"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                         android:layout_weight="0.6"
                         android:text="Fim" />
 
-                    <TextView
+                    <Button
                         android:id="@+id/horarioFinal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -196,28 +196,35 @@
                             android:id="@+id/botaoIm1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.25"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im1"/>
                         <!--android:src="@drawable/album_icon"-->
                         <ImageButton
                             android:id="@+id/botaoIm2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.2" />
+                            android:layout_weight="0.25"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im2"/>
                         <ImageButton
                             android:id="@+id/botaoIm3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.2" />
+                            android:layout_weight="0.25"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im3"/>
                         <ImageButton
                             android:id="@+id/botaoIm4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.2"/>
-                        <ImageButton
-                            android:id="@+id/botaoIm5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.2" />
+                            android:layout_weight="0.25"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im4"/>
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
