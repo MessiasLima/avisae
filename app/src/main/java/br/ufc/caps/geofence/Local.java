@@ -6,9 +6,10 @@ import java.io.Serializable;
 
 /**
  * Created by Sergio Marinho on 31/05/2016.
+ *
  * @author Sergio Marinho
  */
-public class Local implements Serializable{
+public class Local implements Serializable {
     public static final String KEY = "LOCAL";
     public static final int FALSO = 0;
     public static final int VERDADEIRO = 1;
@@ -54,7 +55,8 @@ public class Local implements Serializable{
         this.imagem = imagem;
     }
 
-    public Local(){};
+    public Local() {
+    };
 
     public int getId() {
         return id;
@@ -154,5 +156,12 @@ public class Local implements Serializable{
                 .setCircularRegion(this.latitude, this.longitude, this.raio)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        String descricao = "Lembrete: " + texto + "\n";
+        descricao = descricao + "Hora: " + tempo + "\n";
+        return descricao;
     }
 }
