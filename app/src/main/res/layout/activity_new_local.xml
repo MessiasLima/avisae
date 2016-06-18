@@ -138,8 +138,7 @@
                 android:id="@+id/botaoEscolherLugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Escolher Local"
-                android:onClick="escolherLugar"/>
+                android:text="Escolher Local" />
             </LinearLayout>
             </android.support.v7.widget.CardView>
 
