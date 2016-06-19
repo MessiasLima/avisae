@@ -315,6 +315,7 @@ public class NewLocalActivity extends AppCompatActivity {
                 Log.e("teste: ", bd.buscar(tituloCaixa.getEditableText().toString()).getNome());
             }
         } else {
+            setResult(2,getIntent());
             finish();
         }
         return true;
