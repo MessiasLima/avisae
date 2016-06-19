@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.SQLException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class BD implements Serializable{
     private void fechaConexao(){
         bd.close();
     }
-    public void adicionar(Local l){
+    public void adicionar(Local l) throws SQLException{
         abreConexao();
         ContentValues linha = new ContentValues();
         linha.put("aviso",l.getAviso());//aviso, tempo, nome, texto, ativo, favorito, raio, latitude, longitude
@@ -39,7 +40,7 @@ public class BD implements Serializable{
         linha.put("latitude",l.getLatitude());
         linha.put("longitude",l.getLongitude());
         linha.put("imagem",l.getImagem());
-        bd.insert("local",null, linha);// nome da tabela, uma variavel ai para caso especifico de insercao com todas as colunas nulas> vo ver isso melhor ,valores para a coluna
+        bd.insertOrThrow("local",null, linha);// nome da tabela, uma variavel ai para caso especifico de insercao com todas as colunas nulas> vo ver isso melhor ,valores para a coluna
         fechaConexao();
     }
     public boolean atualizar(Local l){

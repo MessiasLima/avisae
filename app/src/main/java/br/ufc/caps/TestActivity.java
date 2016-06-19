@@ -61,7 +61,12 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
 
         //bd.atualizar((new Local(t.get(0).getId(), Local.ALARME, "hausa", "sjais", "ansa", 1, 1, 1, 1.7, 1.7)));
         Log.e("eiiiiiiiiiiiiiii", t.size() + "");
-        boolean b = bd.excluir(t.get(1));
+        boolean b=true;
+        try{
+             b = bd.excluir(t.get(1));
+        }catch (Exception e){
+
+        }
         t = bd.buscar();
         Log.e("eiiiiiiiiiiiiiii", t.size() + "");
         Log.e("eiiiiiiiiiiiiiii", b + "");
@@ -84,7 +89,11 @@ public class TestActivity extends AppCompatActivity implements GoogleApiClient.C
 
         BD bd = new BD(this);
         if (bd.buscar(local.getNome()) == null) {
-            bd.adicionar(local);
+            try{
+                bd.adicionar(local);
+            }catch (Exception e){
+
+            }
         }
 
         Geofence localGeofence = local.getGeofence();

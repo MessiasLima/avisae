@@ -1,8 +1,10 @@
 package br.ufc.caps.activity;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.ufc.caps.R;
@@ -22,6 +25,7 @@ import br.ufc.caps.recyclerView.LocalCustomAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private CoordinatorLayout cl;
     private BD dataBase;
 
     @Override
@@ -30,15 +34,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        cl= (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(MainActivity.this,NewLocalActivity.class));
+               startActivityForResult(new Intent(MainActivity.this,NewLocalActivity.class),2);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            String mensagem=data.getStringExtra("mensagemPersistencia");
+            if(mensagem!=null){
+                if(mensagem.equals("sa")){
+                    Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_adicionar, Snackbar.LENGTH_LONG);
+                    barra.show();
+                }
+                else if(mensagem.equals("se")){
+                    Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_editar, Snackbar.LENGTH_LONG);
+                    barra.show();
+                }
+                //nao tem else, vai cair num dos dois, coloquei a comparacao aqui pra o codigo ficar mais claro
+            }
+        }
     }
 
     @Override
@@ -52,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         if(dataBase ==null){
             dataBase = new BD(this);
         }
-
         // Estou adicionando esse dois lugarem manualmente só pra fins de teste
         // Quando terminar o periodo de desenvolvimento, apagar essas linhas
 
@@ -80,11 +105,7 @@ public class MainActivity extends AppCompatActivity {
         local2.setLongitude(-38.569949d);
         local2.setImagem(2);
 
-        //dataBase.adicionar(local);
-        //dataBase.adicionar(local2);
-
         mostraCardsNaTela();
-        Log.e("oi","haha");
     }
 
     public void mostraCardsNaTela(){

@@ -51,7 +51,11 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
                         startActivity(i);
                     }
                     local.setAtivo(Local.FALSO);
-                    database.atualizar(local);
+                    try{
+                        database.atualizar(local);
+                    }catch (Exception e){
+
+                    }
                 }
             }
         }

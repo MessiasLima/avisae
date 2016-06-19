@@ -1,5 +1,25 @@
 <resources>
     <string name="app_name">C.A.P.S.</string>
+    <string name="titulo_activity_local_adicionar">Adicionar Local</string>
+    <string name="titulo_activity_local_editar">Editar Local</string>
     <string name="bluetooth_not_available">BLuetooth não disponível</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="salvar">Salvar</string>
+    <string name="local">Local</string>
+    <string name="escolher_local">Escolher Local</string>
+    <string name="recado">Recado</string>
+    <string name="digite_nome_aviso">Digite o nome desse aviso aqui</string>
+    <string name="digite_gostara_lembrado">Digite aqui o que gostará de ser lembrado...</string>
+    <string name="imagem">Imagem</string>
+    <string name="forma">Forma</string>
+    <string name="alarme">Alarme</string>
+    <string name="notificacao">Notificacao</string>
+    <string name="horario">Horário</string>
+    <string name="dia_todo">Dia Todo</string>
+    <string name="inicio_horario">Inicio</string>
+    <string name="fim_horario">Fim</string>
+    <string name="sucesso_persistencia_adicionar">Aviso inserido com sucesso!</string>
+    <string name="erro_persistencia_adicionar">Um erro ocorreu ao adicionar o aviso!</string>
+    <string name="sucesso_persistencia_editar">Aviso editado com sucesso!</string>
+    <string name="erro_persistencia_editar">Um erro ocorreu ao editar o aviso!</string>
 </resources>
