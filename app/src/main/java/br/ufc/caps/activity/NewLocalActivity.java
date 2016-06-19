@@ -20,6 +20,10 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 import br.ufc.caps.R;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.Local;
@@ -38,16 +42,15 @@ public class NewLocalActivity extends AppCompatActivity {
     private EditText recadoCaixa;
     private int modoAviso;
     private int imgEscolhida;
-    private String InicioEscolhido;
-    private String FinalEscolhido;
+    private String inicioEscolhido;
+    private String finalEscolhido;
     private Local localAPersistir;
-
+    private CoordinatorLayout clanl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar ac = getSupportActionBar();
         if(getIntent().getSerializableExtra("local")==null){
-            Log.e("ta nulo","nuloo");
             ac.setTitle(R.string.titulo_activity_local_adicionar);
             ac.setDefaultDisplayHomeAsUpEnabled(true);
             ac.setDisplayUseLogoEnabled(true);
@@ -60,6 +63,8 @@ public class NewLocalActivity extends AppCompatActivity {
             horarioFinal = (Button)this.findViewById(R.id.horarioFinal);
             tituloCaixa = (EditText)this.findViewById(R.id.nomeLocal);
             recadoCaixa = (EditText)this.findViewById(R.id.textoRecado);
+            inicioEscolhido="00:00";
+            finalEscolhido="00:00";
             bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
             bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
             bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
@@ -92,9 +97,39 @@ public class NewLocalActivity extends AppCompatActivity {
             bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
             bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
             localAPersistir = (Local)getIntent().getSerializableExtra("local");
+            //titulo
             tituloCaixa.setText(localAPersistir.getNome());
+
+            //texto resumo
             recadoCaixa.setText(localAPersistir.getTexto());
-            //so fiz o titulo, o resumo e o botao.. inda falta colocar o resto na interface para o usuario ver
+
+            //horarios
+            if(localAPersistir.getTempo().equals("--")){
+                inicioEscolhido = "00:00";
+                finalEscolhido = "00:00";
+                horarioFinal.setText("00:00");
+                horarioInicial.setText("00:00");
+                horarioFinal.setEnabled(false);
+                horarioInicial.setEnabled(false);
+                chave.setChecked(true);
+            }else{
+                String[] aux = localAPersistir.getTempo().split(";");
+                inicioEscolhido = aux[0];
+                finalEscolhido = aux[1];
+                horarioInicial.setText(inicioEscolhido);
+                horarioFinal.setText(finalEscolhido);
+            }
+
+            //aviso
+            if(Local.ALARME==localAPersistir.getAviso()){
+                alarme.setChecked(true);
+                modoAviso = Local.ALARME;
+            }else{
+                notificacao.setChecked(true);
+                modoAviso = Local.NOTIFICACAO;
+            }
+
+            //imagens
             switch (localAPersistir.getImagem()){
                 case 1:
                     imgEscolhida=1;
@@ -192,8 +227,20 @@ public class NewLocalActivity extends AppCompatActivity {
                 //to usando esses pq se nao a api 15 nao aceita, se nao seriam getHour e getMinute();
                 int horas = seletorDeTempo.getCurrentHour();
                 int minutos = seletorDeTempo.getCurrentMinute();
-                FinalEscolhido = horas+":"+minutos;
-                horarioFinal.setText(FinalEscolhido);
+                String horasStr;
+                String minutosStr;
+                if(horas<10){
+                    horasStr="0"+horas;
+                }else{
+                    horasStr=""+horas;
+                }
+                if(minutos<10){
+                    minutosStr="0"+minutos;
+                }else{
+                    minutosStr=""+minutos;
+                }
+                finalEscolhido = horasStr+":"+minutosStr;
+                horarioFinal.setText(finalEscolhido);
                 dialog.cancel();
             }
         });
@@ -221,8 +268,20 @@ public class NewLocalActivity extends AppCompatActivity {
                 //to usando esses pq se nao a api 15 nao aceita, se nao seriam getHour e getMinute();
                 int horas = seletorDeTempoInicial.getCurrentHour();
                 int minutos = seletorDeTempoInicial.getCurrentMinute();
-                InicioEscolhido = horas+":"+minutos;
-                horarioInicial.setText(InicioEscolhido);
+                String horasStr;
+                String minutosStr;
+                if(horas<10){
+                    horasStr="0"+horas;
+                }else{
+                    horasStr=""+horas;
+                }
+                if(minutos<10){
+                    minutosStr="0"+minutos;
+                }else{
+                    minutosStr=""+minutos;
+                }
+                inicioEscolhido = horasStr+":"+minutosStr;
+                horarioInicial.setText(inicioEscolhido);
                 dialog.cancel();
             }
         });
@@ -262,28 +321,31 @@ public class NewLocalActivity extends AppCompatActivity {
                 localAPersistir.setNome(tituloCaixa.getEditableText().toString());
                 localAPersistir.setRaio(412);
                 if(!chave.isChecked()){
-                    localAPersistir.setTempo(InicioEscolhido+";"+FinalEscolhido);
+                    localAPersistir.setTempo(inicioEscolhido+";"+finalEscolhido);
                 }
                 else{
                     localAPersistir.setTempo("--");
                 }
                 localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
                 try {
+                    if(tituloCaixa.getEditableText().toString().replace(" ","").equals("")){
+                        clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
+                        Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
+                        barra.show();
+                        return true;
+                    }
                     bd.adicionar(localAPersistir);
                     getIntent().putExtra("mensagemPersistencia", "sa");
                     setResult(2,getIntent());
                     finish();
                 }
                 catch (SQLException e){
-                    CoordinatorLayout clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
                     Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
                     barra.show();
                 }
             }
-            else{
-                Log.e("obs:","se nao ta nulo, é pq vai ser editado aqui ne amigao");
+            else{// se é pra editar, e nao adicionar
                 localAPersistir = (Local)getIntent().getSerializableExtra("local");
-                //colocar aqui bascimanete a mesma coisa la de cima, a diferenca eh que o item que veio pra cá ja tem um id pra persistir no BD
                 localAPersistir.setAtivo(Local.VERDADEIRO);
                 localAPersistir.setAviso(modoAviso);
                 localAPersistir.setImagem(imgEscolhida);
@@ -293,13 +355,20 @@ public class NewLocalActivity extends AppCompatActivity {
                 localAPersistir.setNome(tituloCaixa.getEditableText().toString());
                 localAPersistir.setRaio(412);
                 if(!chave.isChecked()){
-                    localAPersistir.setTempo(InicioEscolhido+";"+FinalEscolhido);
+                    localAPersistir.setTempo(inicioEscolhido+";"+finalEscolhido);
                 }
                 else{
                     localAPersistir.setTempo("--");
                 }
                 localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
 
+                //checando se o titulo ta nulo
+                if(tituloCaixa.getEditableText().toString().replace(" ","").equals("")){
+                    clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
+                    Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
+                    barra.show();
+                    return true;
+                }
                 boolean foi = bd.atualizar(localAPersistir);
 
                 if(foi){
@@ -307,7 +376,6 @@ public class NewLocalActivity extends AppCompatActivity {
                     setResult(2,getIntent());
                     finish();
                 }else{
-                    CoordinatorLayout clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
                     Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_editar, Snackbar.LENGTH_LONG);
                     barra.show();
                 }

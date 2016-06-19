@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (recyclerView ==null){
             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         }
