@@ -151,6 +151,7 @@
             <Button
                 android:id="@+id/botaoEscolherLugar"
                 android:layout_width="match_parent"
+                android:onClick="escolherLocal"
                 android:layout_height="wrap_content"
                 android:text="@string/escolher_local" />
             </LinearLayout>

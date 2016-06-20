@@ -1,15 +1,15 @@
 package br.ufc.caps.activity;
 
-import android.content.DialogInterface;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +21,14 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import br.ufc.caps.R;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.Local;
 
 public class NewLocalActivity extends AppCompatActivity {
+
+    private static final int PEGAR_LOCALIZACAO_REQUEST_CODE = 50 ;
+
     private ImageButton bt1;
     private ImageButton bt2;
     private ImageButton bt3;
@@ -46,25 +46,26 @@ public class NewLocalActivity extends AppCompatActivity {
     private String finalEscolhido;
     private Local localAPersistir;
     private CoordinatorLayout clanl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_local);
         ActionBar ac = getSupportActionBar();
-        if(getIntent().getSerializableExtra("local")==null){
+        if (getIntent().getSerializableExtra("local") == null) {
             ac.setTitle(R.string.titulo_activity_local_adicionar);
             ac.setDefaultDisplayHomeAsUpEnabled(true);
             ac.setDisplayUseLogoEnabled(true);
             ac.setDisplayHomeAsUpEnabled(true);
-            setContentView(R.layout.activity_new_local);
             chave = (Switch) this.findViewById(R.id.diaTodo);
-            alarme = (RadioButton)this.findViewById(R.id.radioAlarme);
-            notificacao = (RadioButton)this.findViewById(R.id.radioNotificacao);
-            horarioInicial = (Button)this.findViewById(R.id.horarioInicial);
-            horarioFinal = (Button)this.findViewById(R.id.horarioFinal);
-            tituloCaixa = (EditText)this.findViewById(R.id.nomeLocal);
-            recadoCaixa = (EditText)this.findViewById(R.id.textoRecado);
-            inicioEscolhido="00:00";
-            finalEscolhido="00:00";
+            alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
+            notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
+            horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
+            horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
+            tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
+            recadoCaixa = (EditText) this.findViewById(R.id.textoRecado);
+            inicioEscolhido = "00:00";
+            finalEscolhido = "00:00";
             bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
             bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
             bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
@@ -77,26 +78,25 @@ public class NewLocalActivity extends AppCompatActivity {
             bt2.setColorFilter(Color.argb(225, 255, 255, 255));
             bt3.setColorFilter(Color.argb(225, 255, 255, 255));
             bt4.setColorFilter(Color.argb(225, 255, 255, 255));
-            imgEscolhida=1;
-        }
-        else{
+            imgEscolhida = 1;
+        } else {
             ac.setTitle(R.string.titulo_activity_local_editar);
             ac.setDefaultDisplayHomeAsUpEnabled(true);
             ac.setDisplayUseLogoEnabled(true);
             ac.setDisplayHomeAsUpEnabled(true);
             setContentView(R.layout.activity_new_local);
             chave = (Switch) this.findViewById(R.id.diaTodo);
-            alarme = (RadioButton)this.findViewById(R.id.radioAlarme);
-            notificacao = (RadioButton)this.findViewById(R.id.radioNotificacao);
-            horarioInicial = (Button)this.findViewById(R.id.horarioInicial);
-            horarioFinal = (Button)this.findViewById(R.id.horarioFinal);
-            tituloCaixa = (EditText)this.findViewById(R.id.nomeLocal);
-            recadoCaixa = (EditText)this.findViewById(R.id.textoRecado);
+            alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
+            notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
+            horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
+            horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
+            tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
+            recadoCaixa = (EditText) this.findViewById(R.id.textoRecado);
             bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
             bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
             bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
             bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
-            localAPersistir = (Local)getIntent().getSerializableExtra("local");
+            localAPersistir = (Local) getIntent().getSerializableExtra("local");
             //titulo
             tituloCaixa.setText(localAPersistir.getNome());
 
@@ -104,7 +104,7 @@ public class NewLocalActivity extends AppCompatActivity {
             recadoCaixa.setText(localAPersistir.getTexto());
 
             //horarios
-            if(localAPersistir.getTempo().equals("--")){
+            if (localAPersistir.getTempo().equals("--")) {
                 inicioEscolhido = "00:00";
                 finalEscolhido = "00:00";
                 horarioFinal.setText("00:00");
@@ -112,7 +112,7 @@ public class NewLocalActivity extends AppCompatActivity {
                 horarioFinal.setEnabled(false);
                 horarioInicial.setEnabled(false);
                 chave.setChecked(true);
-            }else{
+            } else {
                 String[] aux = localAPersistir.getTempo().split(";");
                 inicioEscolhido = aux[0];
                 finalEscolhido = aux[1];
@@ -121,39 +121,39 @@ public class NewLocalActivity extends AppCompatActivity {
             }
 
             //aviso
-            if(Local.ALARME==localAPersistir.getAviso()){
+            if (Local.ALARME == localAPersistir.getAviso()) {
                 alarme.setChecked(true);
                 modoAviso = Local.ALARME;
-            }else{
+            } else {
                 notificacao.setChecked(true);
                 modoAviso = Local.NOTIFICACAO;
             }
 
             //imagens
-            switch (localAPersistir.getImagem()){
+            switch (localAPersistir.getImagem()) {
                 case 1:
-                    imgEscolhida=1;
+                    imgEscolhida = 1;
                     bt1.setColorFilter(Color.argb(0, 255, 255, 255));
                     bt2.setColorFilter(Color.argb(225, 255, 255, 255));
                     bt3.setColorFilter(Color.argb(225, 255, 255, 255));
                     bt4.setColorFilter(Color.argb(225, 255, 255, 255));
                     break;
                 case 2:
-                    imgEscolhida=2;
+                    imgEscolhida = 2;
                     bt1.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt2.setColorFilter(Color.argb(0, 255, 255, 255));
                     bt3.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt4.setColorFilter(Color.argb(215, 255, 255, 255));
                     break;
                 case 3:
-                    imgEscolhida=3;
+                    imgEscolhida = 3;
                     bt1.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt2.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt3.setColorFilter(Color.argb(0, 255, 255, 255));
                     bt4.setColorFilter(Color.argb(215, 255, 255, 255));
                     break;
                 case 4:
-                    imgEscolhida=4;
+                    imgEscolhida = 4;
                     bt1.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt2.setColorFilter(Color.argb(215, 255, 255, 255));
                     bt3.setColorFilter(Color.argb(215, 255, 255, 255));
@@ -163,58 +163,61 @@ public class NewLocalActivity extends AppCompatActivity {
         }
     }
 
-    public void clickBtn1(View v){
-        imgEscolhida=1;
+    public void clickBtn1(View v) {
+        imgEscolhida = 1;
         bt1.setColorFilter(Color.argb(0, 255, 255, 255));
         bt2.setColorFilter(Color.argb(225, 255, 255, 255));
         bt3.setColorFilter(Color.argb(225, 255, 255, 255));
         bt4.setColorFilter(Color.argb(225, 255, 255, 255));
     }
-    public void clickBtn2(View v){
-        imgEscolhida=2;
+
+    public void clickBtn2(View v) {
+        imgEscolhida = 2;
         bt1.setColorFilter(Color.argb(215, 255, 255, 255));
         bt2.setColorFilter(Color.argb(0, 255, 255, 255));
         bt3.setColorFilter(Color.argb(215, 255, 255, 255));
         bt4.setColorFilter(Color.argb(215, 255, 255, 255));
     }
-    public void clickBtn3(View v){
-        imgEscolhida=3;
+
+    public void clickBtn3(View v) {
+        imgEscolhida = 3;
         bt1.setColorFilter(Color.argb(215, 255, 255, 255));
         bt2.setColorFilter(Color.argb(215, 255, 255, 255));
         bt3.setColorFilter(Color.argb(0, 255, 255, 255));
         bt4.setColorFilter(Color.argb(215, 255, 255, 255));
     }
-    public void clickBtn4(View v){
-        imgEscolhida=4;
+
+    public void clickBtn4(View v) {
+        imgEscolhida = 4;
         bt1.setColorFilter(Color.argb(215, 255, 255, 255));
         bt2.setColorFilter(Color.argb(215, 255, 255, 255));
         bt3.setColorFilter(Color.argb(215, 255, 255, 255));
         bt4.setColorFilter(Color.argb(0, 255, 255, 255));
     }
-    public void mudaSwitch(View v){
-        if(chave!=null){
-            if(chave.isChecked()){
+
+    public void mudaSwitch(View v) {
+        if (chave != null) {
+            if (chave.isChecked()) {
                 horarioInicial.setEnabled(false);
                 horarioFinal.setEnabled(false);
-            }
-            else{
+            } else {
                 horarioInicial.setEnabled(true);
                 horarioFinal.setEnabled(true);
             }
         }
     }
-    public void mudaForma(View v){
-        if(alarme.isChecked()){
+
+    public void mudaForma(View v) {
+        if (alarme.isChecked()) {
             modoAviso = Local.ALARME;
-            Log.e("mudança na forma","alarme");
-        }
-        else{
+            Log.e("mudança na forma", "alarme");
+        } else {
             modoAviso = Local.NOTIFICACAO;
-            Log.e("mudança na forma","notificacao");
+            Log.e("mudança na forma", "notificacao");
         }
     }
 
-    public void mudaHorarioFinal(View v){
+    public void mudaHorarioFinal(View v) {
         AlertDialog.Builder construtorDaTela = new AlertDialog.Builder(this);
         construtorDaTela.setTitle("Horário de Término");
         final TimePicker seletorDeTempo = new TimePicker(this);
@@ -229,17 +232,17 @@ public class NewLocalActivity extends AppCompatActivity {
                 int minutos = seletorDeTempo.getCurrentMinute();
                 String horasStr;
                 String minutosStr;
-                if(horas<10){
-                    horasStr="0"+horas;
-                }else{
-                    horasStr=""+horas;
+                if (horas < 10) {
+                    horasStr = "0" + horas;
+                } else {
+                    horasStr = "" + horas;
                 }
-                if(minutos<10){
-                    minutosStr="0"+minutos;
-                }else{
-                    minutosStr=""+minutos;
+                if (minutos < 10) {
+                    minutosStr = "0" + minutos;
+                } else {
+                    minutosStr = "" + minutos;
                 }
-                finalEscolhido = horasStr+":"+minutosStr;
+                finalEscolhido = horasStr + ":" + minutosStr;
                 horarioFinal.setText(finalEscolhido);
                 dialog.cancel();
             }
@@ -255,7 +258,7 @@ public class NewLocalActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void mudaHorarioInicial(View v){
+    public void mudaHorarioInicial(View v) {
         AlertDialog.Builder construtorDaTela = new AlertDialog.Builder(this);
         construtorDaTela.setTitle("Horário de Início");
         final TimePicker seletorDeTempoInicial = new TimePicker(this);
@@ -270,17 +273,17 @@ public class NewLocalActivity extends AppCompatActivity {
                 int minutos = seletorDeTempoInicial.getCurrentMinute();
                 String horasStr;
                 String minutosStr;
-                if(horas<10){
-                    horasStr="0"+horas;
-                }else{
-                    horasStr=""+horas;
+                if (horas < 10) {
+                    horasStr = "0" + horas;
+                } else {
+                    horasStr = "" + horas;
                 }
-                if(minutos<10){
-                    minutosStr="0"+minutos;
-                }else{
-                    minutosStr=""+minutos;
+                if (minutos < 10) {
+                    minutosStr = "0" + minutos;
+                } else {
+                    minutosStr = "" + minutos;
                 }
-                inicioEscolhido = horasStr+":"+minutosStr;
+                inicioEscolhido = horasStr + ":" + minutosStr;
                 horarioInicial.setText(inicioEscolhido);
                 dialog.cancel();
             }
@@ -294,6 +297,10 @@ public class NewLocalActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = construtorDaTela.create();
         alertDialog.show();
+    }
+
+    public void escolherLocal(View v) {
+       startActivityForResult(new Intent(this,EscolherLocalActivity.class),PEGAR_LOCALIZACAO_REQUEST_CODE);
     }
 
 
@@ -309,8 +316,8 @@ public class NewLocalActivity extends AppCompatActivity {
         BD bd = new BD(this);
         int id = item.getItemId();
         if (id == R.id.salvarNovoLocal) {
-            Log.e("clicou no menuzim","haha");
-            if(getIntent().getSerializableExtra("local")==null){
+            Log.e("clicou no menuzim", "haha");
+            if (getIntent().getSerializableExtra("local") == null) {
                 localAPersistir = new Local();
                 localAPersistir.setAtivo(Local.VERDADEIRO);
                 localAPersistir.setAviso(modoAviso);
@@ -320,32 +327,29 @@ public class NewLocalActivity extends AppCompatActivity {
                 localAPersistir.setLongitude(4523);
                 localAPersistir.setNome(tituloCaixa.getEditableText().toString());
                 localAPersistir.setRaio(412);
-                if(!chave.isChecked()){
-                    localAPersistir.setTempo(inicioEscolhido+";"+finalEscolhido);
-                }
-                else{
+                if (!chave.isChecked()) {
+                    localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
+                } else {
                     localAPersistir.setTempo("--");
                 }
                 localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
                 try {
-                    if(tituloCaixa.getEditableText().toString().replace(" ","").equals("")){
-                        clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
+                    if (tituloCaixa.getEditableText().toString().replace(" ", "").equals("")) {
+                        clanl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout_activity_new_local);
                         Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
                         barra.show();
                         return true;
                     }
                     bd.adicionar(localAPersistir);
                     getIntent().putExtra("mensagemPersistencia", "sa");
-                    setResult(2,getIntent());
+                    setResult(2, getIntent());
                     finish();
-                }
-                catch (SQLException e){
+                } catch (SQLException e) {
                     Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
                     barra.show();
                 }
-            }
-            else{// se é pra editar, e nao adicionar
-                localAPersistir = (Local)getIntent().getSerializableExtra("local");
+            } else {// se é pra editar, e nao adicionar
+                localAPersistir = (Local) getIntent().getSerializableExtra("local");
                 localAPersistir.setAtivo(Local.VERDADEIRO);
                 localAPersistir.setAviso(modoAviso);
                 localAPersistir.setImagem(imgEscolhida);
@@ -354,28 +358,27 @@ public class NewLocalActivity extends AppCompatActivity {
                 localAPersistir.setLongitude(4523);
                 localAPersistir.setNome(tituloCaixa.getEditableText().toString());
                 localAPersistir.setRaio(412);
-                if(!chave.isChecked()){
-                    localAPersistir.setTempo(inicioEscolhido+";"+finalEscolhido);
-                }
-                else{
+                if (!chave.isChecked()) {
+                    localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
+                } else {
                     localAPersistir.setTempo("--");
                 }
                 localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
 
                 //checando se o titulo ta nulo
-                if(tituloCaixa.getEditableText().toString().replace(" ","").equals("")){
-                    clanl = (CoordinatorLayout)findViewById(R.id.coordinatorLayout_activity_new_local);
+                if (tituloCaixa.getEditableText().toString().replace(" ", "").equals("")) {
+                    clanl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout_activity_new_local);
                     Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
                     barra.show();
                     return true;
                 }
                 boolean foi = bd.atualizar(localAPersistir);
 
-                if(foi){
+                if (foi) {
                     getIntent().putExtra("mensagemPersistencia", "se");
-                    setResult(2,getIntent());
+                    setResult(2, getIntent());
                     finish();
-                }else{
+                } else {
                     Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_editar, Snackbar.LENGTH_LONG);
                     barra.show();
                 }
@@ -383,9 +386,14 @@ public class NewLocalActivity extends AppCompatActivity {
                 Log.e("teste: ", bd.buscar(tituloCaixa.getEditableText().toString()).getNome());
             }
         } else {
-            setResult(2,getIntent());
+            setResult(2, getIntent());
             finish();
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
