@@ -38,7 +38,7 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
             for (Geofence geofence : geoFenceEvent.getTriggeringGeofences()) {
                 BD database = new BD(this);
                 Local local = database.buscar(geofence.getRequestId());
-                if (local.getAtivo() == Local.VERDADEIRO) {
+                if (local != null && local.getAtivo() == Local.VERDADEIRO) {
                     if (local.getAviso() == Local.NOTIFICACAO) {
                         NotificationUtil.sendNotification(local.getNome(), local.getTexto(), this, local);
                     } else {
@@ -51,9 +51,9 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
                         startActivity(i);
                     }
                     local.setAtivo(Local.FALSO);
-                    try{
+                    try {
                         database.atualizar(local);
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }

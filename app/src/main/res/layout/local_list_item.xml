@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_farmacia" />
+                android:src="@drawable/ic_1" />
 
             <Switch
                 android:id="@+id/card_switcher"

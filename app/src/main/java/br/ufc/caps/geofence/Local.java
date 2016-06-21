@@ -20,6 +20,8 @@ import br.ufc.caps.database.BD;
  */
 public class Local implements Serializable {
     public static final String KEY = "LOCAL";
+    public static final String KEY_LOCALIZACAO="LOCATION";
+
     public static final int FALSO = 0;
     public static final int VERDADEIRO = 1;
     public static final int NOTIFICACAO = 2;
@@ -185,6 +187,7 @@ public class Local implements Serializable {
                 BD bd = new BD(context);
                 bd.excluir(Local.this);
                 ((MainActivity)context).mostraCardsNaTela();
+                ((MainActivity)context).retirarGeofence(nome);
             }
         });
         builder.create().show();

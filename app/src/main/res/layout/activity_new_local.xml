@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout_activity_new_local"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinatorLayout_activity_new_local"
     tools:context="br.ufc.caps.activity.NewLocalActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,234 +19,254 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
+                app:cardBackgroundColor="#f5f5f5"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:text="Título"/>
-                <EditText
-                    android:id="@+id/nomeLocal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/digite_nome_aviso"
-                    android:maxLength="50"
-                    android:paddingBottom="6dp"/>
-            </LinearLayout>
-            </android.support.v7.widget.CardView>
+                app:cardUseCompatPadding="true"
+                app:contentPadding="0dp">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="@string/horario"
-                    android:textColor="@color/colorAccent"/>
+                    android:padding="@dimen/card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Título"
+                        android:textColor="@color/colorAccent" />
+
+                    <EditText
+                        android:id="@+id/nomeLocal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/digite_nome_aviso"
+                        android:maxLength="50"
+                        android:paddingBottom="6dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#f5f5f5"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="6dp">
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:text="@string/dia_todo" />
+                        android:paddingBottom="4dp"
+                        android:text="@string/horario"
+                        android:textColor="@color/colorAccent" />
 
-                    <Switch
-                        android:id="@+id/diaTodo"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="mudaSwitch"
-                        android:layout_weight="0.4" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:paddingBottom="6dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:text="@string/dia_todo" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:text="@string/inicio_horario" />
-
-                    <Button
-                        android:id="@+id/horarioInicial"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:onClick="mudaHorarioInicial"
-                        android:text="00:00" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="6dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.15"
-                        android:text="@string/fim_horario" />
-
-                    <Button
-                        android:id="@+id/horarioFinal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.85"
-                        android:onClick="mudaHorarioFinal"
-                        android:text="00:00" />
-                </LinearLayout>
+                        <Switch
+                            android:id="@+id/diaTodo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:onClick="mudaSwitch" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="6dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="@string/inicio_horario" />
+
+                        <Button
+                            android:id="@+id/horarioInicial"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="mudaHorarioInicial"
+                            android:text="00:00" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="6dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="@string/fim_horario" />
+
+                        <Button
+                            android:id="@+id/horarioFinal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="mudaHorarioFinal"
+                            android:text="00:00" />
+                    </LinearLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="#f5f5f5"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:text="@string/local"
-                android:textColor="@color/colorAccent"/>
-
-            <Button
-                android:id="@+id/botaoEscolherLugar"
-                android:layout_width="match_parent"
-                android:onClick="escolherLocal"
-                android:layout_height="wrap_content"
-                android:text="@string/escolher_local" />
-            </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="@string/recado"
-                    android:textColor="@color/colorAccent"/>
+                app:contentPadding="0dp">
 
-                <EditText
-                    android:id="@+id/textoRecado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/digite_gostara_lembrado"
-                    android:lines="4"
-                    android:maxLength="140" />
-            </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="@string/local"
+                        android:textColor="@color/colorAccent" />
+
+                    <Button
+                        android:id="@+id/botaoEscolherLugar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="escolherLocal"
+                        android:text="@string/escolher_local" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#f5f5f5"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="@string/recado"
+                        android:textColor="@color/colorAccent" />
+
+                    <EditText
+                        android:id="@+id/textoRecado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/digite_gostara_lembrado"
+                        android:maxLength="140" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#f5f5f5"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/card_padding"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="4dp"
                         android:text="@string/imagem"
-                        android:textColor="@color/colorAccent"/>
+                        android:textColor="@color/colorAccent" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <ImageButton
                             android:id="@+id/botaoIm1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:padding="0dp"
                             android:backgroundTint="#00000000"
                             android:onClick="clickBtn1"
-                            android:src="@mipmap/ic_img1"/>
+                            android:padding="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_img1" />
+
                         <ImageButton
                             android:id="@+id/botaoIm2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:padding="0dp"
                             android:backgroundTint="#00000000"
                             android:onClick="clickBtn2"
-                            android:src="@mipmap/ic_img2"/>
+                            android:padding="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_img2" />
+
                         <ImageButton
                             android:id="@+id/botaoIm3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:padding="0dp"
                             android:backgroundTint="#00000000"
                             android:onClick="clickBtn3"
-                            android:src="@mipmap/ic_img3"/>
+                            android:padding="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_img3" />
+
                         <ImageButton
                             android:id="@+id/botaoIm4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:padding="0dp"
                             android:backgroundTint="#00000000"
                             android:onClick="clickBtn4"
-                            android:src="@mipmap/ic_img4"/>
+                            android:padding="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_img4" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -258,39 +274,42 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp"
+                app:cardBackgroundColor="#f5f5f5"
                 app:cardElevation="2dp"
-                app:cardBackgroundColor="#f5f5f5">
+                app:cardUseCompatPadding="true"
+                app:contentPadding="0dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:padding="@dimen/card_padding"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="@string/forma"
-                    android:textColor="@color/colorAccent"/>
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:id="@+id/radioAlarme"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/alarme"
-                        android:onClick="mudaForma"/>
+                        android:paddingBottom="4dp"
+                        android:text="@string/forma"
+                        android:textColor="@color/colorAccent" />
 
-                    <RadioButton
-                        android:id="@+id/radioNotificacao"
+                    <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/notificacao"
-                        android:onClick="mudaForma"/>
-                </RadioGroup>
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/radioAlarme"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onClick="mudaForma"
+                            android:text="@string/alarme" />
+
+                        <RadioButton
+                            android:id="@+id/radioNotificacao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onClick="mudaForma"
+                            android:text="@string/notificacao" />
+                    </RadioGroup>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

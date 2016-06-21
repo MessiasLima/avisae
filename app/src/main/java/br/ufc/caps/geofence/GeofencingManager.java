@@ -60,7 +60,9 @@ public class GeofencingManager {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
             }
         } else {
-            LocationServices.GeofencingApi.addGeofences(googleApiClient, geofenceList, getGeofenceTransitionPendingIntent());
+            if (geofenceList.size() > 0) {
+                LocationServices.GeofencingApi.addGeofences(googleApiClient, geofenceList, getGeofenceTransitionPendingIntent());
+            }
         }
     }
 
@@ -78,6 +80,15 @@ public class GeofencingManager {
         geofenceList.remove(geofence);
         List<String> geofencesToRemove = new ArrayList<>();
         geofencesToRemove.add(geofence.getRequestId());
+        LocationServices.GeofencingApi.removeGeofences(googleApiClient, geofencesToRemove);
+    }
+
+    /**
+     * Retira um local da lista e do Listenet
+     */
+    public void removeGeofence(String id) {
+        List<String> geofencesToRemove = new ArrayList<>();
+        geofencesToRemove.add(id);
         LocationServices.GeofencingApi.removeGeofences(googleApiClient, geofencesToRemove);
     }
 

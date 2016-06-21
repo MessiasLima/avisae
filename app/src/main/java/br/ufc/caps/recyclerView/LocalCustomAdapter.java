@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.ufc.caps.R;
+import br.ufc.caps.geofence.GeofencingManager;
 import br.ufc.caps.geofence.Local;
 
 /**
@@ -55,6 +56,20 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
         }
         holder.enabledSwitch.setChecked(enabled);
 
+        switch (local.getImagem()){
+            case 1:
+                holder.backgroundImageView.setImageResource(R.drawable.ic_1);
+                break;
+            case 2:
+                holder.backgroundImageView.setImageResource(R.drawable.ic_2);
+                break;
+            case 3:
+                holder.backgroundImageView.setImageResource(R.drawable.ic_3);
+                break;
+            case 4:
+                holder.backgroundImageView.setImageResource(R.drawable.ic_4);
+                break;
+        }
         holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.ufc.caps.R;
+import br.ufc.caps.geofence.Local;
 
 public class EscolherLocalActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -79,7 +78,7 @@ private  SupportMapFragment mapFragment;
                     @Override
                     public void onClick(View v) {
                         Intent intent = getIntent();
-                        intent.putExtra("LOCATION",localSelecionado);
+                        intent.putExtra(Local.KEY_LOCALIZACAO,localSelecionado);
                         setResult(RESULT_OK,intent);
                         finish();
                     }

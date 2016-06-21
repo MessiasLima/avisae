@@ -21,6 +21,8 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import br.ufc.caps.R;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.Local;
@@ -46,6 +48,7 @@ public class NewLocalActivity extends AppCompatActivity {
     private String finalEscolhido;
     private Local localAPersistir;
     private CoordinatorLayout clanl;
+    private LatLng localizacaoSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,87 +316,104 @@ public class NewLocalActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        BD bd = new BD(this);
-        int id = item.getItemId();
-        if (id == R.id.salvarNovoLocal) {
-            Log.e("clicou no menuzim", "haha");
-            if (getIntent().getSerializableExtra("local") == null) {
-                localAPersistir = new Local();
-                localAPersistir.setAtivo(Local.VERDADEIRO);
-                localAPersistir.setAviso(modoAviso);
-                localAPersistir.setImagem(imgEscolhida);
-                localAPersistir.setFavorito(Local.VERDADEIRO);
-                localAPersistir.setLatitude(4151);
-                localAPersistir.setLongitude(4523);
-                localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                localAPersistir.setRaio(412);
-                if (!chave.isChecked()) {
-                    localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
-                } else {
-                    localAPersistir.setTempo("--");
-                }
-                localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
-                try {
+        //Adicionei a verificação antes de criar qualquer objeto
+
+        if (item.getItemId() == android.R.id.home){
+            setResult(RESULT_CANCELED,getIntent());
+            finish();
+        }
+
+        if(item.getItemId() == R.id.salvarNovoLocal) {
+
+            if (tituloCaixa.getEditableText().toString().trim().length() == 0 || localizacaoSelecionada == null) {
+                Snackbar.make(tituloCaixa, R.string.erro_verifique_campos, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
+
+            BD bd = new BD(this);
+            int id = item.getItemId();
+            if (id == R.id.salvarNovoLocal) {
+                if (getIntent().getSerializableExtra("local") == null) {
+                    localAPersistir = new Local();
+                    localAPersistir.setAtivo(Local.VERDADEIRO);
+                    localAPersistir.setAviso(modoAviso);
+                    localAPersistir.setImagem(imgEscolhida);
+                    localAPersistir.setFavorito(Local.VERDADEIRO);
+                    localAPersistir.setLatitude(localizacaoSelecionada.latitude);
+                    localAPersistir.setLongitude(localizacaoSelecionada.longitude);
+                    localAPersistir.setNome(tituloCaixa.getEditableText().toString());
+                    localAPersistir.setRaio(412);
+                    if (!chave.isChecked()) {
+                        localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
+                    } else {
+                        localAPersistir.setTempo("--");
+                    }
+                    localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
+                    try {
+                        if (tituloCaixa.getEditableText().toString().trim().equals("")) {
+                            clanl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout_activity_new_local);
+                            Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
+                            barra.show();
+                            return true;
+                        }
+                        bd.adicionar(localAPersistir);
+                        getIntent().putExtra("mensagemPersistencia", "sa");
+                        setResult(2, getIntent());
+                        finish();
+                    } catch (SQLException e) {
+                        Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
+                        barra.show();
+                    }
+                } else {// se é pra editar, e nao adicionar
+                    localAPersistir = (Local) getIntent().getSerializableExtra("local");
+                    localAPersistir.setAtivo(Local.VERDADEIRO);
+                    localAPersistir.setAviso(modoAviso);
+                    localAPersistir.setImagem(imgEscolhida);
+                    localAPersistir.setFavorito(Local.VERDADEIRO);
+                    localAPersistir.setLatitude(4151);
+                    localAPersistir.setLongitude(4523);
+                    localAPersistir.setNome(tituloCaixa.getEditableText().toString());
+                    localAPersistir.setRaio(412);
+                    if (!chave.isChecked()) {
+                        localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
+                    } else {
+                        localAPersistir.setTempo("--");
+                    }
+                    localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
+
+                    //checando se o titulo ta nulo
                     if (tituloCaixa.getEditableText().toString().replace(" ", "").equals("")) {
                         clanl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout_activity_new_local);
                         Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
                         barra.show();
                         return true;
                     }
-                    bd.adicionar(localAPersistir);
-                    getIntent().putExtra("mensagemPersistencia", "sa");
-                    setResult(2, getIntent());
-                    finish();
-                } catch (SQLException e) {
-                    Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
-                    barra.show();
-                }
-            } else {// se é pra editar, e nao adicionar
-                localAPersistir = (Local) getIntent().getSerializableExtra("local");
-                localAPersistir.setAtivo(Local.VERDADEIRO);
-                localAPersistir.setAviso(modoAviso);
-                localAPersistir.setImagem(imgEscolhida);
-                localAPersistir.setFavorito(Local.VERDADEIRO);
-                localAPersistir.setLatitude(4151);
-                localAPersistir.setLongitude(4523);
-                localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                localAPersistir.setRaio(412);
-                if (!chave.isChecked()) {
-                    localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
-                } else {
-                    localAPersistir.setTempo("--");
-                }
-                localAPersistir.setTexto(recadoCaixa.getEditableText().toString());
+                    boolean foi = bd.atualizar(localAPersistir);
 
-                //checando se o titulo ta nulo
-                if (tituloCaixa.getEditableText().toString().replace(" ", "").equals("")) {
-                    clanl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout_activity_new_local);
-                    Snackbar barra = Snackbar.make(clanl, R.string.erro_nome_nao_valido, Snackbar.LENGTH_LONG);
-                    barra.show();
-                    return true;
-                }
-                boolean foi = bd.atualizar(localAPersistir);
+                    if (foi) {
+                        getIntent().putExtra("mensagemPersistencia", "se");
+                        setResult(2, getIntent());
+                        finish();
+                    } else {
+                        Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_editar, Snackbar.LENGTH_LONG);
+                        barra.show();
+                    }
 
-                if (foi) {
-                    getIntent().putExtra("mensagemPersistencia", "se");
-                    setResult(2, getIntent());
-                    finish();
-                } else {
-                    Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_editar, Snackbar.LENGTH_LONG);
-                    barra.show();
+                    Log.e("teste: ", bd.buscar(tituloCaixa.getEditableText().toString()).getNome());
                 }
-
-                Log.e("teste: ", bd.buscar(tituloCaixa.getEditableText().toString()).getNome());
+            } else {
+                setResult(2, getIntent());
+                finish();
             }
-        } else {
-            setResult(2, getIntent());
-            finish();
         }
         return true;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+       if (requestCode ==  PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK){
+           localizacaoSelecionada =  data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
+       }
     }
 }
