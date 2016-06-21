@@ -2,11 +2,14 @@ package br.ufc.caps.recyclerView;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -16,22 +19,24 @@ import br.ufc.caps.R;
 
 /**
  * Created by messias on 6/13/16.
+ *
  * @author Messias Lima
  */
 public class LocalViewHolder extends RecyclerView.ViewHolder {
 
     private static final int CARD_INTIAL_SIZE = 300;
-    private static final int TEXT_BOX_INTIAL_SIZE =  56;
+    private static final int TEXT_BOX_INTIAL_SIZE = 56;
 
     Context context;
-    TextView textViewTitle , textViewText;
+    TextView textViewTitle, textViewText;
     ImageView backgroundImageView;
     Switch enabledSwitch;
     CardView cardView;
     LinearLayout textBar;
-    boolean expanded  = false;
+    boolean expanded = false;
+    PopupMenu popupMenu;
 
-    public LocalViewHolder(Context context,View itemView) {
+    public LocalViewHolder(Context context, View itemView) {
         super(itemView);
         this.context = context;
         textViewTitle = (TextView) itemView.findViewById(R.id.card_title_text);
@@ -40,6 +45,7 @@ public class LocalViewHolder extends RecyclerView.ViewHolder {
         enabledSwitch = (Switch) itemView.findViewById(R.id.card_switcher);
         cardView = (CardView) itemView.findViewById(R.id.card);
         textBar = (LinearLayout) itemView.findViewById(R.id.card_text_bar);
+
 
         backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +57,18 @@ public class LocalViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
+        ImageButton imageButton = (ImageButton) itemView.findViewById(R.id.popup_button);
+        popupMenu = new PopupMenu(context, imageButton);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.menu_card, popupMenu.getMenu());
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
+            }
+        });
+
     }
 
     public void expand() {
@@ -60,9 +78,9 @@ public class LocalViewHolder extends RecyclerView.ViewHolder {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
 
-                cardView.getLayoutParams().height = targetHeightCard + (int) (targetHeightCard * interpolatedTime);
+                cardView.getLayoutParams().height = targetHeightCard + (int) (targetHeightCard / 2 * interpolatedTime);
                 cardView.requestLayout();
-                textBar.getLayoutParams().height = targetHeightTextBox + (int) ((targetHeightCard) * interpolatedTime);
+                textBar.getLayoutParams().height = targetHeightTextBox + (int) ((targetHeightCard / 2) * interpolatedTime);
                 textBar.requestLayout();
             }
 
@@ -84,10 +102,10 @@ public class LocalViewHolder extends RecyclerView.ViewHolder {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
 
-                cardView.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE * interpolatedTime);
+                cardView.getLayoutParams().height = targetHeightCard - (int) (CARD_INTIAL_SIZE / 2 * interpolatedTime);
                 cardView.requestLayout();
 
-                textBar.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE) * interpolatedTime);
+                textBar.getLayoutParams().height = targetHeightTextBox - (int) ((CARD_INTIAL_SIZE / 2) * interpolatedTime);
                 textBar.requestLayout();
             }
 

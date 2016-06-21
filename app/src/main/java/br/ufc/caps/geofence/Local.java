@@ -1,8 +1,17 @@
 package br.ufc.caps.geofence;
 
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+
 import com.google.android.gms.location.Geofence;
 
 import java.io.Serializable;
+
+import br.ufc.caps.R;
+import br.ufc.caps.activity.MainActivity;
+import br.ufc.caps.database.BD;
 
 /**
  * Created by Sergio Marinho on 31/05/2016.
@@ -163,5 +172,21 @@ public class Local implements Serializable {
         String descricao = "Lembrete: " + texto + "\n";
         descricao = descricao + "Hora: " + tempo + "\n";
         return descricao;
+    }
+
+    public void excluir(final Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.excluir);
+        builder.setMessage(context.getString(R.string.certeza_excluir) + " " + nome + "?");
+        builder.setNegativeButton(R.string.cancelar,null);
+        builder.setPositiveButton(R.string.excluir, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BD bd = new BD(context);
+                bd.excluir(Local.this);
+                ((MainActivity)context).mostraCardsNaTela();
+            }
+        });
+        builder.create().show();
     }
 }

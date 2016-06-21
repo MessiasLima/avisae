@@ -1,13 +1,13 @@
 package br.ufc.caps.recyclerView;
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import br.ufc.caps.geofence.Local;
 public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
 
     private static final int CARD_INTIAL_SIZE = 300;
-    private static final int TEXT_BOX_INTIAL_SIZE =  56;
+    private static final int TEXT_BOX_INTIAL_SIZE = 56;
 
     Context context;
     List<Local> locals;
@@ -65,6 +65,19 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
                 } else {
                     holder.expand();
                 }
+            }
+        });
+
+        holder.popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.menu_card_editar) {
+
+                }
+                if (item.getItemId() == R.id.menu_card_excluir) {
+                    local.excluir(context);
+                }
+                return true;
             }
         });
     }

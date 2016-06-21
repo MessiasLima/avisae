@@ -69,42 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         if (recyclerView ==null){
             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         }
-
         if(dataBase ==null){
             dataBase = new BD(this);
         }
-        // Estou adicionando esse dois lugarem manualmente só pra fins de teste
-        // Quando terminar o periodo de desenvolvimento, apagar essas linhas
-
-        Local local = new Local();
-        local.setAviso(Local.ALARME);
-        local.setTempo("15;17");
-        local.setNome("Residencia Universitaria");
-        local.setTexto("Testing... 123");
-        local.setFavorito(Local.FALSO);
-        local.setAtivo(Local.VERDADEIRO);
-        local.setRaio(60f);
-        local.setLatitude(-3.739984d);
-        local.setLongitude(-38.569949d);
-        local.setImagem(1);
-
-        Local local2 = new Local();
-        local2.setAviso(Local.ALARME);
-        local2.setTempo("15;17");
-        local2.setNome("Seara da Ciencia");
-        local2.setTexto("Testing... 321");
-        local2.setFavorito(Local.FALSO);
-        local2.setAtivo(Local.VERDADEIRO);
-        local2.setRaio(60f);
-        local2.setLatitude(-3.739984d);
-        local2.setLongitude(-38.569949d);
-        local2.setImagem(2);
-
         mostraCardsNaTela();
+        super.onResume();
+
     }
 
     public void mostraCardsNaTela(){

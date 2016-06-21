@@ -26,4 +26,8 @@
     <string name="title_activity_escolher_local">Map</string>
     <string name="local_selecionado">Você escolheu um local para o lembrete</string>
     <string name="confirmar">Confirmar</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
+    <string name="certeza_excluir">Tem certeza que deseja excluir</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
