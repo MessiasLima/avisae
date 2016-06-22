@@ -29,7 +29,7 @@ import br.ufc.caps.geofence.Local;
 
 public class NewLocalActivity extends AppCompatActivity {
 
-    private static final int PEGAR_LOCALIZACAO_REQUEST_CODE = 50 ;
+    private static final int PEGAR_LOCALIZACAO_REQUEST_CODE = 50;
 
     private ImageButton bt1;
     private ImageButton bt2;
@@ -49,57 +49,39 @@ public class NewLocalActivity extends AppCompatActivity {
     private Local localAPersistir;
     private CoordinatorLayout clanl;
     private LatLng localizacaoSelecionada;
+    private boolean editar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_local);
         ActionBar ac = getSupportActionBar();
-        if (getIntent().getSerializableExtra("local") == null) {
+        ac.setDefaultDisplayHomeAsUpEnabled(true);
+        ac.setDisplayUseLogoEnabled(true);
+        ac.setDisplayHomeAsUpEnabled(true);
+
+        initComponents();
+
+        if (getIntent().hasExtra(Local.KEY)) {
+            localAPersistir = (Local) getIntent().getExtras().getSerializable(Local.KEY);
+        }
+        if (localAPersistir == null) {
             ac.setTitle(R.string.titulo_activity_local_adicionar);
-            ac.setDefaultDisplayHomeAsUpEnabled(true);
-            ac.setDisplayUseLogoEnabled(true);
-            ac.setDisplayHomeAsUpEnabled(true);
-            chave = (Switch) this.findViewById(R.id.diaTodo);
-            alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
-            notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
-            horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
-            horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
-            tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
-            recadoCaixa = (EditText) this.findViewById(R.id.textoRecado);
             inicioEscolhido = "00:00";
             finalEscolhido = "00:00";
-            bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
-            bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
-            bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
-            bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
-
             // aqui to colocando alarme como o default
             alarme.setChecked(true);
             modoAviso = Local.ALARME;
-
             bt2.setColorFilter(Color.argb(225, 255, 255, 255));
             bt3.setColorFilter(Color.argb(225, 255, 255, 255));
             bt4.setColorFilter(Color.argb(225, 255, 255, 255));
             imgEscolhida = 1;
         } else {
             ac.setTitle(R.string.titulo_activity_local_editar);
-            ac.setDefaultDisplayHomeAsUpEnabled(true);
-            ac.setDisplayUseLogoEnabled(true);
-            ac.setDisplayHomeAsUpEnabled(true);
-            setContentView(R.layout.activity_new_local);
-            chave = (Switch) this.findViewById(R.id.diaTodo);
-            alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
-            notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
-            horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
-            horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
-            tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
-            recadoCaixa = (EditText) this.findViewById(R.id.textoRecado);
-            bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
-            bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
-            bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
-            bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
-            localAPersistir = (Local) getIntent().getSerializableExtra("local");
+            editar = true;
+            //local escolhido
+            localizacaoSelecionada = new LatLng(localAPersistir.getLatitude(), localAPersistir.getLongitude());
+
             //titulo
             tituloCaixa.setText(localAPersistir.getNome());
 
@@ -164,6 +146,20 @@ public class NewLocalActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    private void initComponents() {
+        chave = (Switch) this.findViewById(R.id.diaTodo);
+        alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
+        notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
+        horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
+        horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
+        tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
+        recadoCaixa = (EditText) this.findViewById(R.id.textoRecado);
+        bt1 = (ImageButton) this.findViewById(R.id.botaoIm1);
+        bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
+        bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
+        bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
     }
 
     public void clickBtn1(View v) {
@@ -303,7 +299,7 @@ public class NewLocalActivity extends AppCompatActivity {
     }
 
     public void escolherLocal(View v) {
-       startActivityForResult(new Intent(this,EscolherLocalActivity.class),PEGAR_LOCALIZACAO_REQUEST_CODE);
+        startActivityForResult(new Intent(this, EscolherLocalActivity.class), PEGAR_LOCALIZACAO_REQUEST_CODE);
     }
 
 
@@ -318,12 +314,12 @@ public class NewLocalActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //Adicionei a verificação antes de criar qualquer objeto
 
-        if (item.getItemId() == android.R.id.home){
-            setResult(RESULT_CANCELED,getIntent());
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED, getIntent());
             finish();
         }
 
-        if(item.getItemId() == R.id.salvarNovoLocal) {
+        if (item.getItemId() == R.id.salvarNovoLocal) {
 
             if (tituloCaixa.getEditableText().toString().trim().length() == 0 || localizacaoSelecionada == null) {
                 Snackbar.make(tituloCaixa, R.string.erro_verifique_campos, Snackbar.LENGTH_LONG).show();
@@ -334,7 +330,7 @@ public class NewLocalActivity extends AppCompatActivity {
             BD bd = new BD(this);
             int id = item.getItemId();
             if (id == R.id.salvarNovoLocal) {
-                if (getIntent().getSerializableExtra("local") == null) {
+                if (!editar) {
                     localAPersistir = new Local();
                     localAPersistir.setAtivo(Local.VERDADEIRO);
                     localAPersistir.setAviso(modoAviso);
@@ -343,7 +339,7 @@ public class NewLocalActivity extends AppCompatActivity {
                     localAPersistir.setLatitude(localizacaoSelecionada.latitude);
                     localAPersistir.setLongitude(localizacaoSelecionada.longitude);
                     localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                    localAPersistir.setRaio(412);
+                    localAPersistir.setRaio(Local.RAIO_PADRAO);
                     if (!chave.isChecked()) {
                         localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
                     } else {
@@ -366,15 +362,14 @@ public class NewLocalActivity extends AppCompatActivity {
                         barra.show();
                     }
                 } else {// se é pra editar, e nao adicionar
-                    localAPersistir = (Local) getIntent().getSerializableExtra("local");
                     localAPersistir.setAtivo(Local.VERDADEIRO);
                     localAPersistir.setAviso(modoAviso);
                     localAPersistir.setImagem(imgEscolhida);
                     localAPersistir.setFavorito(Local.VERDADEIRO);
-                    localAPersistir.setLatitude(4151);
-                    localAPersistir.setLongitude(4523);
+                    localAPersistir.setLatitude(localizacaoSelecionada.latitude);
+                    localAPersistir.setLongitude(localizacaoSelecionada.longitude);
                     localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                    localAPersistir.setRaio(412);
+                    localAPersistir.setRaio(Local.RAIO_PADRAO);
                     if (!chave.isChecked()) {
                         localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
                     } else {
@@ -412,8 +407,8 @@ public class NewLocalActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       if (requestCode ==  PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK){
-           localizacaoSelecionada =  data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
-       }
+        if (requestCode == PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK) {
+            localizacaoSelecionada = data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
+        }
     }
 }

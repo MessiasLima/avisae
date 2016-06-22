@@ -3,6 +3,7 @@ package br.ufc.caps.recyclerView;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.ufc.caps.R;
+import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.GeofencingManager;
 import br.ufc.caps.geofence.Local;
 
@@ -28,6 +30,7 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
     Context context;
     List<Local> locals;
     boolean expanded = false;
+    private BD bd;
 
     public LocalCustomAdapter(Context context, List<Local> locals) {
         this.context = context;
@@ -50,11 +53,11 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
 
         holder.textViewText.setText(local.toString());
 
-        boolean enabled = false;
-        if (local.getAtivo() == Local.VERDADEIRO) {
-            enabled = true;
-        }
-        holder.enabledSwitch.setChecked(enabled);
+//        boolean enabled = false;
+//        if (local.getAtivo() == Local.VERDADEIRO) {
+//            enabled = true;
+//        }
+//        holder.enabledSwitch.setChecked(enabled);
 
         switch (local.getImagem()){
             case 1:
@@ -83,15 +86,22 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
             }
         });
 
-        holder.popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        if (local.getAtivo() == Local.VERDADEIRO){
+            holder.cardToolbar.getMenu().getItem(0).setTitle(R.string.desativar);
+        }
+        holder.cardToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.menu_card_editar) {
-
-                }
-                if (item.getItemId() == R.id.menu_card_excluir) {
+                if (item.getItemId() == R.id.menu_card_excluir){
                     local.excluir(context);
                 }
+                if (item.getItemId() == R.id.menu_card_ativar){
+                    local.toggleAtivacao(context);
+                }
+                if (item.getItemId() == R.id.menu_card_editar){
+                    local.editar(context);
+                }
+
                 return true;
             }
         });

@@ -14,6 +14,8 @@
     <string name="forma">Forma</string>
     <string name="alarme">Alarme</string>
     <string name="notificacao">Notificacao</string>
+    <string name="ativar">Ativar</string>
+    <string name="desativar">Desativar</string>
     <string name="horario">Horário</string>
     <string name="dia_todo">Dia Todo</string>
     <string name="inicio_horario">Inicio</string>

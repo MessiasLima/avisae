@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     GoogleApiClient googleApiClient;
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MAIN ACTIVITY";
+    public static final int NEW_LOCAL_REQUEST_CODE = 2;
 
     private RecyclerView recyclerView;
     private CoordinatorLayout cl;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, NewLocalActivity.class), 2);
+                startActivityForResult(new Intent(MainActivity.this, NewLocalActivity.class), NEW_LOCAL_REQUEST_CODE);
             }
         });
 
@@ -82,13 +83,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        mostraCardsNaTela();
         if (requestCode == 2 && resultCode == RESULT_OK) {
             String mensagem = data.getStringExtra("mensagemPersistencia");
             if (mensagem != null) {
                 if (mensagem.equals("sa")) {
                     Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_adicionar, Snackbar.LENGTH_LONG);
                     barra.show();
-                    mostraCardsNaTela();
+
                 } else if (mensagem.equals("se")) {
                     Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_editar, Snackbar.LENGTH_LONG);
                     barra.show();

@@ -1,8 +1,10 @@
 package br.ufc.caps.geofence;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import com.google.android.gms.location.Geofence;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 
 import br.ufc.caps.R;
 import br.ufc.caps.activity.MainActivity;
+import br.ufc.caps.activity.NewLocalActivity;
 import br.ufc.caps.database.BD;
 
 /**
@@ -20,9 +23,11 @@ import br.ufc.caps.database.BD;
  */
 public class Local implements Serializable {
     public static final String KEY = "LOCAL";
-    public static final String KEY_LOCALIZACAO="LOCATION";
+    public static final String KEY_LOCALIZACAO = "LOCATION";
+
 
     public static final int FALSO = 0;
+    public static final int RAIO_PADRAO = 40;
     public static final int VERDADEIRO = 1;
     public static final int NOTIFICACAO = 2;
     public static final int ALARME = 3;
@@ -67,7 +72,9 @@ public class Local implements Serializable {
     }
 
     public Local() {
-    };
+    }
+
+    ;
 
     public int getId() {
         return id;
@@ -172,24 +179,57 @@ public class Local implements Serializable {
     @Override
     public String toString() {
         String descricao = "Lembrete: " + texto + "\n";
-        descricao = descricao + "Hora: " + tempo + "\n";
+        descricao = descricao + "Hora: " + tempo.replace(";", " as ").replace("--", "O dia inteiro") + "\n";
+
+        String status;
+        if (ativo == VERDADEIRO) {
+            status = "Ativo";
+        } else {
+            status = "Inativo";
+        }
+
+        String aviso;
+        if (getAviso() == NOTIFICACAO){
+            aviso = "Notificação";
+        }else {
+            aviso = "Alarme";
+        }
+        descricao = descricao + "Status: " + status+"\n";
+        descricao = descricao + "Aviso: " + aviso ;
         return descricao;
     }
 
-    public void excluir(final Context context){
+    public void excluir(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.excluir);
         builder.setMessage(context.getString(R.string.certeza_excluir) + " " + nome + "?");
-        builder.setNegativeButton(R.string.cancelar,null);
+        builder.setNegativeButton(R.string.cancelar, null);
         builder.setPositiveButton(R.string.excluir, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 BD bd = new BD(context);
                 bd.excluir(Local.this);
-                ((MainActivity)context).mostraCardsNaTela();
-                ((MainActivity)context).retirarGeofence(nome);
+                ((MainActivity) context).mostraCardsNaTela();
+                ((MainActivity) context).retirarGeofence(nome);
             }
         });
         builder.create().show();
+    }
+
+    public void toggleAtivacao(final Context context) {
+        BD bd = new BD(context);
+        if (getAtivo() == VERDADEIRO) {
+            setAtivo(FALSO);
+        }else {
+            setAtivo(VERDADEIRO);
+        }
+        bd.atualizar(this);
+        ((MainActivity) context).mostraCardsNaTela();
+    }
+
+    public void editar(final Context context) {
+        Intent intent = new Intent(context, NewLocalActivity.class);
+        intent.putExtra(KEY,this);
+        ((Activity)context).startActivityForResult(intent,MainActivity.NEW_LOCAL_REQUEST_CODE);
     }
 }
