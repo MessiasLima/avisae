@@ -24,6 +24,7 @@ import br.ufc.caps.database.BD;
 public class Local implements Serializable {
     public static final String KEY = "LOCAL";
     public static final String KEY_LOCALIZACAO = "LOCATION";
+    public static final String KEY_THUMBNAIL = "THUMBNAIL";
 
 
     public static final int FALSO = 0;

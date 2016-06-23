@@ -6,8 +6,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="salvar">Salvar</string>
     <string name="local">Local</string>
-    <string name="escolher_local">Escolher Local</string>
-    <string name="recado">Recado</string>
+    <string name="escolher_local">Definir Local</string>
+    <string name="descricao">Descrição</string>
     <string name="digite_nome_aviso">Digite o nome desse aviso aqui</string>
     <string name="digite_gostara_lembrado">Digite aqui o que gostará de ser lembrado...</string>
     <string name="imagem">Imagem</string>
@@ -17,7 +17,7 @@
     <string name="ativar">Ativar</string>
     <string name="desativar">Desativar</string>
     <string name="horario">Horário</string>
-    <string name="dia_todo">Dia Todo</string>
+    <string name="dia_todo">Dia Inteiro</string>
     <string name="inicio_horario">Inicio</string>
     <string name="fim_horario">Fim</string>
     <string name="sucesso_persistencia_adicionar">Aviso inserido com sucesso!</string>
@@ -26,7 +26,7 @@
     <string name="erro_persistencia_editar">Um erro ocorreu ao editar o aviso!</string>
     <string name="erro_nome_nao_valido">Insira um título para o aviso!</string>
     <string name="title_activity_escolher_local">Toque para escolher um local</string>
-    <string name="local_selecionado">Você escolheu um local para o lembrete</string>
+    <string name="local_selecionado">Deseja definir este local para o lembrete?</string>
     <string name="confirmar">Confirmar</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>

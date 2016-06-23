@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,7 +18,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
@@ -36,6 +39,7 @@ public class NewLocalActivity extends AppCompatActivity {
     private ImageButton bt3;
     private ImageButton bt4;
     private Button horarioInicial;
+    private Button escolherLocalButton;
     private Button horarioFinal;
     private Switch chave;
     private RadioButton alarme;
@@ -50,6 +54,7 @@ public class NewLocalActivity extends AppCompatActivity {
     private CoordinatorLayout clanl;
     private LatLng localizacaoSelecionada;
     private boolean editar = false;
+    private ImageView mapThumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +157,9 @@ public class NewLocalActivity extends AppCompatActivity {
         chave = (Switch) this.findViewById(R.id.diaTodo);
         alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
         notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
+
+        RadioGroup radioGroup = new RadioGroup(this);
+
         horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
         horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
         tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
@@ -160,6 +168,8 @@ public class NewLocalActivity extends AppCompatActivity {
         bt2 = (ImageButton) this.findViewById(R.id.botaoIm2);
         bt3 = (ImageButton) this.findViewById(R.id.botaoIm3);
         bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
+        mapThumbnail = (ImageView) findViewById(R.id.map_thumbnail);
+        escolherLocalButton = (Button) findViewById(R.id.botaoEscolherLugar);
     }
 
     public void clickBtn1(View v) {
@@ -405,10 +415,18 @@ public class NewLocalActivity extends AppCompatActivity {
         return true;
     }
 
+    public void adicionarMapTumbnail(Bitmap b) {
+        mapThumbnail.setImageBitmap(b);
+        escolherLocalButton.setHeight(200);
+        escolherLocalButton.setText("");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK) {
             localizacaoSelecionada = data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
+            Bitmap b = data.getExtras().getParcelable(Local.KEY_THUMBNAIL);
+            adicionarMapTumbnail(b);
         }
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout_activity_new_local"
     android:layout_width="match_parent"
@@ -16,59 +15,62 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
+                android:orientation="vertical"
+                android:padding="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Título" />
+
+                <EditText
+                    android:id="@+id/nomeLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="50"
+                    android:paddingBottom="6dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="4dp"
+                    android:text="@string/descricao" />
+
+                <EditText
+                    android:id="@+id/textoRecado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="140" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_vertical_margin">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_horario" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/card_padding">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Título"
-                        android:textColor="@color/colorAccent" />
-
-                    <EditText
-                        android:id="@+id/nomeLocal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/digite_nome_aviso"
-                        android:maxLength="50"
-                        android:paddingBottom="6dp" />
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/card_padding">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:text="@string/horario"
-                        android:textColor="@color/colorAccent" />
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -77,22 +79,27 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.6"
-                            android:text="@string/dia_todo" />
+                            android:text="@string/dia_todo"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
 
                         <Switch
                             android:id="@+id/diaTodo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:onClick="mudaSwitch" />
-                    </LinearLayout>
+                            android:onClick="mudaSwitch"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true" />
+                    </RelativeLayout>
 
                     <LinearLayout
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="6dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -103,8 +110,10 @@
                         <Button
                             android:id="@+id/horarioInicial"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:gravity="end"
                             android:onClick="mudaHorarioInicial"
                             android:text="00:00" />
                     </LinearLayout>
@@ -112,8 +121,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="6dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -124,173 +132,83 @@
                         <Button
                             android:id="@+id/horarioFinal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:gravity="end"
                             android:onClick="mudaHorarioFinal"
+                            android:singleLine="false"
                             android:text="00:00" />
                     </LinearLayout>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
 
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_vertical_margin">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/card_padding"
-                    android:orientation="vertical">
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_localizacao" />
 
-                    <TextView
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/map_thumbnail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:text="@string/local"
-                        android:textColor="@color/colorAccent" />
+                        android:maxHeight="200dp"
+                        android:scaleType="centerCrop" />
 
                     <Button
                         android:id="@+id/botaoEscolherLugar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="left|center_vertical"
                         android:onClick="escolherLocal"
-                        android:text="@string/escolher_local" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        android:text="@string/escolher_local"
+                        android:textAllCaps="false" />
+                </RelativeLayout>
 
-            <android.support.v7.widget.CardView
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_vertical_margin">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/card_padding"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:text="@string/recado"
-                        android:textColor="@color/colorAccent" />
-
-                    <EditText
-                        android:id="@+id/textoRecado"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/digite_gostara_lembrado"
-                        android:maxLength="140" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/card_padding"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:text="@string/imagem"
-                        android:textColor="@color/colorAccent" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:id="@+id/botaoIm1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.25"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="#00000000"
-                            android:onClick="clickBtn1"
-                            android:padding="0dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_img1" />
-
-                        <ImageButton
-                            android:id="@+id/botaoIm2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.25"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="#00000000"
-                            android:onClick="clickBtn2"
-                            android:padding="0dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_img2" />
-
-                        <ImageButton
-                            android:id="@+id/botaoIm3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.25"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="#00000000"
-                            android:onClick="clickBtn3"
-                            android:padding="0dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_img3" />
-
-                        <ImageButton
-                            android:id="@+id/botaoIm4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.25"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="#00000000"
-                            android:onClick="clickBtn4"
-                            android:padding="0dp"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_img4" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#f5f5f5"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:contentPadding="0dp">
-
-                <LinearLayout
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:padding="@dimen/card_padding"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_notificacao" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:text="@string/forma"
-                        android:textColor="@color/colorAccent" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
 
                     <RadioGroup
                         android:layout_width="match_parent"
@@ -298,20 +216,102 @@
 
                         <RadioButton
                             android:id="@+id/radioAlarme"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
                             android:onClick="mudaForma"
                             android:text="@string/alarme" />
 
                         <RadioButton
                             android:id="@+id/radioNotificacao"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
                             android:onClick="mudaForma"
                             android:text="@string/notificacao" />
                     </RadioGroup>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_vertical_margin">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_image"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/botaoIm1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:adjustViewBounds="true"
+                        android:backgroundTint="#00000000"
+                        android:onClick="clickBtn1"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_img1" />
+
+                    <ImageButton
+                        android:id="@+id/botaoIm2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:adjustViewBounds="true"
+                        android:backgroundTint="#00000000"
+                        android:onClick="clickBtn2"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_img2" />
+
+                    <ImageButton
+                        android:id="@+id/botaoIm3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:adjustViewBounds="true"
+                        android:backgroundTint="#00000000"
+                        android:onClick="clickBtn3"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_img3" />
+
+                    <ImageButton
+                        android:id="@+id/botaoIm4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:adjustViewBounds="true"
+                        android:backgroundTint="#00000000"
+                        android:onClick="clickBtn4"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_img4" />
+                </LinearLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

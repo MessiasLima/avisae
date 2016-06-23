@@ -3,7 +3,7 @@ package br.ufc.caps.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,13 +25,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import br.ufc.caps.R;
 import br.ufc.caps.geofence.Local;
 
-public class EscolherLocalActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class EscolherLocalActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.SnapshotReadyCallback {
 
     private GoogleMap mMap;
     private Marker marcador;
     private LatLng localSelecionado;
     private TextView textView;
-private  SupportMapFragment mapFragment;
+    private SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +68,17 @@ private  SupportMapFragment mapFragment;
             @Override
             public void onMapClick(final LatLng latLng) {
                 localSelecionado = latLng;
-                if (marcador == null){
+                if (marcador == null) {
                     marcador = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
-                }else {
+                } else {
                     marcador.setPosition(latLng);
                 }
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                Snackbar snackbar =  Snackbar.make(textView,R.string.local_selecionado,Snackbar.LENGTH_INDEFINITE);
+                Snackbar snackbar = Snackbar.make(textView, R.string.local_selecionado, Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction(R.string.confirmar, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = getIntent();
-                        intent.putExtra(Local.KEY_LOCALIZACAO,localSelecionado);
-                        setResult(RESULT_OK,intent);
-                        finish();
+                        mMap.snapshot(EscolherLocalActivity.this);
                     }
                 });
                 snackbar.show();
@@ -92,23 +89,34 @@ private  SupportMapFragment mapFragment;
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mMap.getMyLocation() != null){
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationToLatLng(mMap.getMyLocation()),16));
+                if (mMap.getMyLocation() != null) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationToLatLng(mMap.getMyLocation()), 16));
                 }
             }
-        },1000);
+        }, 1000);
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private LatLng locationToLatLng(Location location){
-        return new LatLng(location.getLatitude(),location.getLongitude());
+    private LatLng locationToLatLng(Location location) {
+        return new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
+    @Override
+    public void onSnapshotReady(Bitmap bitmap) {
+
+        bitmap = Bitmap.createBitmap(bitmap,0,(int)bitmap.getHeight()/3,bitmap.getWidth(),200);
+        Intent intent = getIntent();
+        intent.putExtra(Local.KEY_LOCALIZACAO, localSelecionado);
+        intent.putExtra(Local.KEY_THUMBNAIL, bitmap);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
