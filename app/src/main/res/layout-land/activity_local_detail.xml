@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="br.ufc.caps.activity.LocalDetail">
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,12 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imagemCapaLembrete"
+            <LinearLayout
+                android:id="@+id/fundoCapaLembrete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/imagemCapaLembrete"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"/>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"

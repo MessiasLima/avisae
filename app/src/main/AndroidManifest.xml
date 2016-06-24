@@ -32,7 +32,9 @@
             android:name=".geofence.GeofenceIntentService"
             android:exported="false" />
 
-        <activity android:name=".activity.LocalDetail" />
+        <activity android:name=".activity.LocalDetail"
+            android:theme="@style/AppTheme.lembrete"/>
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
