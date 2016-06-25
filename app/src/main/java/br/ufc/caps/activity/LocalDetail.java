@@ -1,5 +1,6 @@
 package br.ufc.caps.activity;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -59,19 +60,27 @@ public class LocalDetail extends AppCompatActivity {
 
         switch (local.getImagem()){
             case 1:
-                fundoCapaLembrete.setBackgroundColor(Color.argb(255,106,240,174));
+                if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
+                    fundoCapaLembrete.setBackgroundColor(Color.argb(255, 106, 240, 174));
+                }
                 imagemCapaLembrete.setImageResource(R.drawable.ic_1);
                 break;
             case 2:
-                fundoCapaLembrete.setBackgroundColor(Color.argb(255,255,139,129));
+                if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
+                    fundoCapaLembrete.setBackgroundColor(Color.argb(255,255,139,129));
+                }
                 imagemCapaLembrete.setImageResource(R.drawable.ic_2);
                 break;
             case 3:
-                fundoCapaLembrete.setBackgroundColor(Color.argb(255,179,137,255));
+                if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
+                    fundoCapaLembrete.setBackgroundColor(Color.argb(255, 179, 137, 255));
+                }
                 imagemCapaLembrete.setImageResource(R.drawable.ic_3);
                 break;
             case 4:
-                fundoCapaLembrete.setBackgroundColor(Color.argb(255,255,255,142));
+                if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
+                    fundoCapaLembrete.setBackgroundColor(Color.argb(255, 255, 255, 142));
+                }
                 imagemCapaLembrete.setImageResource(R.drawable.ic_4);
                 break;
             default:

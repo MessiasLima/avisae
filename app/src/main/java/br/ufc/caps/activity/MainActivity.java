@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        Intent i = new Intent(this,LocalDetail.class);
+        /*Intent i = new Intent(this,LocalDetail.class);
         Local li = new Local();
         li.setTempo("07:30;21:45");
         li.setNome("Comprar Varios Leites");
         li.setTexto("Lembrar de limpar a bunda após arriar a massa");
         li.setImagem(2);
         i.putExtra(Local.KEY,li);
-        startActivity(i);
+        startActivity(i);*/
 
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
