@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,9 +12,41 @@
         <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
     <include layout="@layout/activity_escolher_local"/>
-
     <TextView
         android:id="@+id/ref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#1e33ccff"
+        android:gravity="left">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/raio"/>
+        <LinearLayout
+            android:layout_width="85dp"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/btnMapa1"
+                android:text="+"
+                android:color="#B46F6F6F"
+                android:onClick="aumentaRaio"/>
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/btnMapa2"
+                android:text="-"
+                android:color="#B46F6F6F"
+                android:onClick="diminuiRaio"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -25,10 +25,12 @@ public class Local implements Serializable {
     public static final String KEY = "LOCAL";
     public static final String KEY_LOCALIZACAO = "LOCATION";
     public static final String KEY_THUMBNAIL = "THUMBNAIL";
-
+    public static final String KEY_RAIO = "RAIO";
 
     public static final int FALSO = 0;
     public static final int RAIO_PADRAO = 40;
+    public static final int RAIO_MAXIMO = 600;
+    public static final int RAIO_MINIMO = 20;
     public static final int VERDADEIRO = 1;
     public static final int NOTIFICACAO = 2;
     public static final int ALARME = 3;

@@ -36,4 +36,7 @@
     <string name="erro_verifique_campos">Verifique se os campos estão preenchidos</string>
     <string name="carregando">Carregando...</string>
     <string name="tempo">Tempo:</string>
+    <string name="local_escolhido">Local Escolhido</string>
+    <string name="raio">Raio da Notificação</string>
+
 </resources>

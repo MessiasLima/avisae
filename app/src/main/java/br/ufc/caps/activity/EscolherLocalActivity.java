@@ -1,11 +1,13 @@
 package br.ufc.caps.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +38,7 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
     private LatLng localSelecionado;
     private TextView textView;
     private SupportMapFragment mapFragment;
+    private Circle circuloRaio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,6 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         setContentView(R.layout.activity_escolher_local_externo);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_mapa);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -72,9 +75,11 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
             public void onMapClick(final LatLng latLng) {
                 localSelecionado = latLng;
                 if (marcador == null) {
-                    marcador = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
+                    marcador = mMap.addMarker(new MarkerOptions().position(latLng));//aqui tinha um setTitle("marker in sidney").. esse codigo foi copiado, logo acho que apareceu de gaiato aqui e nao era necessario
+                    circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(Local.RAIO_PADRAO).strokeColor(Color.BLACK).fillColor(Color.argb(30,51,204,255)).strokeWidth(2));
                 } else {
                     marcador.setPosition(latLng);
+                    circuloRaio.setCenter(localSelecionado);
                 }
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                 Snackbar snackbar = Snackbar.make(textView, R.string.local_selecionado, Snackbar.LENGTH_INDEFINITE);
@@ -119,7 +124,20 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         Intent intent = getIntent();
         intent.putExtra(Local.KEY_LOCALIZACAO, localSelecionado);
         intent.putExtra(Local.KEY_THUMBNAIL, bitmap);
+        intent.putExtra(Local.KEY_RAIO,circuloRaio.getRadius());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void aumentaRaio(View v){
+        if(circuloRaio!=null && circuloRaio.getRadius()<Local.RAIO_MAXIMO){
+            circuloRaio.setRadius(circuloRaio.getRadius()+20);
+        }
+    }
+
+    public void diminuiRaio(View v){
+        if(circuloRaio!=null && circuloRaio.getRadius()>Local.RAIO_MINIMO){
+            circuloRaio.setRadius(circuloRaio.getRadius()-20);
+        }
     }
 }

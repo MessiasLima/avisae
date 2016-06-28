@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (requestCode == 2 && resultCode == RESULT_OK) {
             String mensagem = data.getStringExtra("mensagemPersistencia");
             if (mensagem != null) {
+                Log.e("msg","entrou aqui");
                 if (mensagem.equals("sa")) {
                     Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_adicionar, Snackbar.LENGTH_LONG);
                     barra.show();
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_editar, Snackbar.LENGTH_LONG);
                     barra.show();
                 }
+                Log.e("chegou", "mas ta passando por fora");
                 //nao tem else, vai cair num dos dois, coloquei a comparacao aqui pra o codigo ficar mais claro
             }
         }
