@@ -86,70 +86,11 @@ public class NewLocalActivity extends AppCompatActivity {
             editar = true;
             //local escolhido
             localizacaoSelecionada = new LatLng(localAPersistir.getLatitude(), localAPersistir.getLongitude());
-
             //titulo
             tituloCaixa.setText(localAPersistir.getNome());
-
             //texto resumo
             recadoCaixa.setText(localAPersistir.getTexto());
-
-            //horarios
-            if (localAPersistir.getTempo().equals("--")) {
-                inicioEscolhido = "00:00";
-                finalEscolhido = "00:00";
-                horarioFinal.setText("00:00");
-                horarioInicial.setText("00:00");
-                horarioFinal.setEnabled(false);
-                horarioInicial.setEnabled(false);
-                chave.setChecked(true);
-            } else {
-                String[] aux = localAPersistir.getTempo().split(";");
-                inicioEscolhido = aux[0];
-                finalEscolhido = aux[1];
-                horarioInicial.setText(inicioEscolhido);
-                horarioFinal.setText(finalEscolhido);
-            }
-
-            //aviso
-            if (Local.ALARME == localAPersistir.getAviso()) {
-                alarme.setChecked(true);
-                modoAviso = Local.ALARME;
-            } else {
-                notificacao.setChecked(true);
-                modoAviso = Local.NOTIFICACAO;
-            }
-
-            //imagens
-            switch (localAPersistir.getImagem()) {
-                case 1:
-                    imgEscolhida = 1;
-                    bt1.setColorFilter(Color.argb(0, 255, 255, 255));
-                    bt2.setColorFilter(Color.argb(225, 255, 255, 255));
-                    bt3.setColorFilter(Color.argb(225, 255, 255, 255));
-                    bt4.setColorFilter(Color.argb(225, 255, 255, 255));
-                    break;
-                case 2:
-                    imgEscolhida = 2;
-                    bt1.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt2.setColorFilter(Color.argb(0, 255, 255, 255));
-                    bt3.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt4.setColorFilter(Color.argb(215, 255, 255, 255));
-                    break;
-                case 3:
-                    imgEscolhida = 3;
-                    bt1.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt2.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt3.setColorFilter(Color.argb(0, 255, 255, 255));
-                    bt4.setColorFilter(Color.argb(215, 255, 255, 255));
-                    break;
-                case 4:
-                    imgEscolhida = 4;
-                    bt1.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt2.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt3.setColorFilter(Color.argb(215, 255, 255, 255));
-                    bt4.setColorFilter(Color.argb(0, 255, 255, 255));
-                    break;
-            }
+            iniciaConfiguracoesModoEditar();
         }
     }
 
@@ -157,9 +98,6 @@ public class NewLocalActivity extends AppCompatActivity {
         chave = (Switch) this.findViewById(R.id.diaTodo);
         alarme = (RadioButton) this.findViewById(R.id.radioAlarme);
         notificacao = (RadioButton) this.findViewById(R.id.radioNotificacao);
-
-        RadioGroup radioGroup = new RadioGroup(this);
-
         horarioInicial = (Button) this.findViewById(R.id.horarioInicial);
         horarioFinal = (Button) this.findViewById(R.id.horarioFinal);
         tituloCaixa = (EditText) this.findViewById(R.id.nomeLocal);
@@ -170,6 +108,64 @@ public class NewLocalActivity extends AppCompatActivity {
         bt4 = (ImageButton) this.findViewById(R.id.botaoIm4);
         mapThumbnail = (ImageView) findViewById(R.id.map_thumbnail);
         escolherLocalButton = (Button) findViewById(R.id.botaoEscolherLugar);
+    }
+
+    public void iniciaConfiguracoesModoEditar(){
+        //horario
+        if (localAPersistir.getTempo().equals("--")) {
+            inicioEscolhido = "00:00";
+            finalEscolhido = "00:00";
+            horarioFinal.setText("00:00");
+            horarioInicial.setText("00:00");
+            horarioFinal.setEnabled(false);
+            horarioInicial.setEnabled(false);
+            chave.setChecked(true);
+        } else {
+            String[] aux = localAPersistir.getTempo().split(";");
+            inicioEscolhido = aux[0];
+            finalEscolhido = aux[1];
+            horarioInicial.setText(inicioEscolhido);
+            horarioFinal.setText(finalEscolhido);
+        }
+        //aviso
+        if (Local.ALARME == localAPersistir.getAviso()) {
+            alarme.setChecked(true);
+            modoAviso = Local.ALARME;
+        } else {
+            notificacao.setChecked(true);
+            modoAviso = Local.NOTIFICACAO;
+        }
+        //imagens
+        switch (localAPersistir.getImagem()) {
+            case 1:
+                imgEscolhida = 1;
+                bt1.setColorFilter(Color.argb(0, 255, 255, 255));
+                bt2.setColorFilter(Color.argb(225, 255, 255, 255));
+                bt3.setColorFilter(Color.argb(225, 255, 255, 255));
+                bt4.setColorFilter(Color.argb(225, 255, 255, 255));
+                break;
+            case 2:
+                imgEscolhida = 2;
+                bt1.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt2.setColorFilter(Color.argb(0, 255, 255, 255));
+                bt3.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt4.setColorFilter(Color.argb(215, 255, 255, 255));
+                break;
+            case 3:
+                imgEscolhida = 3;
+                bt1.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt2.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt3.setColorFilter(Color.argb(0, 255, 255, 255));
+                bt4.setColorFilter(Color.argb(215, 255, 255, 255));
+                break;
+            case 4:
+                imgEscolhida = 4;
+                bt1.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt2.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt3.setColorFilter(Color.argb(215, 255, 255, 255));
+                bt4.setColorFilter(Color.argb(0, 255, 255, 255));
+                break;
+        }
     }
 
     public void clickBtn1(View v) {
@@ -365,7 +361,7 @@ public class NewLocalActivity extends AppCompatActivity {
                         }
                         bd.adicionar(localAPersistir);
                         getIntent().putExtra("mensagemPersistencia", "sa");
-                        setResult(2, getIntent());
+                        setResult(RESULT_OK, getIntent());
                         finish();
                     } catch (SQLException e) {
                         Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
@@ -398,7 +394,7 @@ public class NewLocalActivity extends AppCompatActivity {
 
                     if (foi) {
                         getIntent().putExtra("mensagemPersistencia", "se");
-                        setResult(2, getIntent());
+                        setResult(RESULT_OK, getIntent());
                         finish();
                     } else {
                         Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_editar, Snackbar.LENGTH_LONG);

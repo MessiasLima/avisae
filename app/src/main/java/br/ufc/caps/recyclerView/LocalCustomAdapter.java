@@ -17,11 +17,6 @@ import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.GeofencingManager;
 import br.ufc.caps.geofence.Local;
 
-/**
- * Created by messias on 6/13/16.
- *
- * @author Messias Lima
- */
 public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
 
     private static final int CARD_INTIAL_SIZE = 300;

@@ -26,7 +26,7 @@
     <string name="sucesso_persistencia_editar">Aviso editado com sucesso!</string>
     <string name="erro_persistencia_editar">Um erro ocorreu ao editar o aviso!</string>
     <string name="erro_nome_nao_valido">Insira um título para o aviso!</string>
-    <string name="title_activity_escolher_local">Toque para escolher um local</string>
+    <string name="title_activity_escolher_local">Change Location</string>
     <string name="local_selecionado">Deseja definir este local para o lembrete?</string>
     <string name="confirmar">Confirmar</string>
     <string name="editar">Editar</string>

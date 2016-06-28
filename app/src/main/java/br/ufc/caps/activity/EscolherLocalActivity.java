@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +51,10 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar ac = getSupportActionBar();
+        ac.setDisplayHomeAsUpEnabled(true);
+        ac.setDisplayUseLogoEnabled(true);
+        ac.setDisplayHomeAsUpEnabled(true);
         textView = (TextView) findViewById(R.id.ref);
     }
 
@@ -76,20 +81,20 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
                 localSelecionado = latLng;
                 if (marcador == null) {
                     marcador = mMap.addMarker(new MarkerOptions().position(latLng));//aqui tinha um setTitle("marker in sidney").. esse codigo foi copiado, logo acho que apareceu de gaiato aqui e nao era necessario
-                    circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(Local.RAIO_PADRAO).strokeColor(Color.BLACK).fillColor(Color.argb(30,51,204,255)).strokeWidth(2));
+                    circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(Local.RAIO_PADRAO).strokeColor(Color.BLACK).fillColor(Color.argb(30, 51, 204, 255)).strokeWidth(2));
                 } else {
                     marcador.setPosition(latLng);
                     circuloRaio.setCenter(localSelecionado);
                 }
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                Snackbar snackbar = Snackbar.make(textView, R.string.local_selecionado, Snackbar.LENGTH_INDEFINITE);
+                /*Snackbar snackbar = Snackbar.make(textView, R.string.local_selecionado, Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction(R.string.confirmar, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mMap.snapshot(EscolherLocalActivity.this);
                     }
                 });
-                snackbar.show();
+                snackbar.show();*/
             }
         });
 
@@ -110,11 +115,26 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
+        else if(item.getItemId() == R.id.salvarLocalMapa){
+            if(marcador!=null){
+                mMap.snapshot(EscolherLocalActivity.this);
+            }
+            else{
+                Snackbar snackbar = Snackbar.make(textView, R.string.selecione_local, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private LatLng locationToLatLng(Location location) {
         return new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_escolher_local, menu);
+        return true;
     }
 
     @Override
