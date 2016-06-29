@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,7 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
     private TextView textView;
     private SupportMapFragment mapFragment;
     private Circle circuloRaio;
+    private ActionBar ac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ActionBar ac = getSupportActionBar();
+        ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setDisplayUseLogoEnabled(true);
         ac.setDisplayHomeAsUpEnabled(true);
@@ -61,7 +63,20 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        // Add a marker in Sydney and move the camera
+
+        if(getIntent().hasExtra(Local.KEY_LOCALIZACAO)){
+            Local localRecebido = (Local)getIntent().getSerializableExtra(Local.KEY_LOCALIZACAO);
+            if(localRecebido!=null){
+                ac.setTitle(R.string.editar_local);
+                localSelecionado = new LatLng(localRecebido.getLatitude(), localRecebido.getLongitude());
+                marcador = mMap.addMarker(new MarkerOptions().position(localSelecionado));
+                circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(localRecebido.getRaio()).strokeColor(Color.BLACK).fillColor(Color.argb(30, 51, 204, 255)).strokeWidth(2));
+            }else{
+                ac.setTitle(R.string.adicionar_local);
+            }
+        }else{
+            ac.setTitle(R.string.adicionar_local);
+        }
 
 
         if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
@@ -80,7 +95,7 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
             public void onMapClick(final LatLng latLng) {
                 localSelecionado = latLng;
                 if (marcador == null) {
-                    marcador = mMap.addMarker(new MarkerOptions().position(latLng));//aqui tinha um setTitle("marker in sidney").. esse codigo foi copiado, logo acho que apareceu de gaiato aqui e nao era necessario
+                    marcador = mMap.addMarker(new MarkerOptions().position(latLng));
                     circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(Local.RAIO_PADRAO).strokeColor(Color.BLACK).fillColor(Color.argb(30, 51, 204, 255)).strokeWidth(2));
                 } else {
                     marcador.setPosition(latLng);

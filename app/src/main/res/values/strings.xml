@@ -37,7 +37,9 @@
     <string name="carregando">Carregando...</string>
     <string name="tempo">Tempo:</string>
     <string name="local_escolhido">Local Escolhido</string>
-    <string name="raio">Raio da Notificação</string>
+    <string name="raio">Raio</string>
     <string name="selecione_local">Nenhum local selecionado, toque na tela para selecionar um local</string>
+    <string name="adicionar_local">Adicionar Local</string>
+    <string name="editar_local">Editar Local</string>
 
 </resources>

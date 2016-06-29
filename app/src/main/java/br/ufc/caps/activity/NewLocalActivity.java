@@ -1,6 +1,7 @@
 package br.ufc.caps.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
@@ -25,6 +26,8 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.io.FileOutputStream;
 
 import br.ufc.caps.R;
 import br.ufc.caps.database.BD;
@@ -55,6 +58,7 @@ public class NewLocalActivity extends AppCompatActivity {
     private LatLng localizacaoSelecionada;
     private boolean editar = false;
     private ImageView mapThumbnail;
+    private float raio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,7 @@ public class NewLocalActivity extends AppCompatActivity {
         } else {
             ac.setTitle(R.string.titulo_activity_local_editar);
             editar = true;
+            raio=localAPersistir.getRaio();
             //local escolhido
             localizacaoSelecionada = new LatLng(localAPersistir.getLatitude(), localAPersistir.getLongitude());
             //titulo
@@ -305,7 +310,11 @@ public class NewLocalActivity extends AppCompatActivity {
     }
 
     public void escolherLocal(View v) {
-        startActivityForResult(new Intent(this, EscolherLocalActivity.class), PEGAR_LOCALIZACAO_REQUEST_CODE);
+        Intent i = new Intent(this, EscolherLocalActivity.class);
+        if(editar){
+            i.putExtra(Local.KEY_LOCALIZACAO,localAPersistir);
+        }
+        startActivityForResult(i, PEGAR_LOCALIZACAO_REQUEST_CODE);
     }
 
 
@@ -345,7 +354,13 @@ public class NewLocalActivity extends AppCompatActivity {
                     localAPersistir.setLatitude(localizacaoSelecionada.latitude);
                     localAPersistir.setLongitude(localizacaoSelecionada.longitude);
                     localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                    localAPersistir.setRaio(Local.RAIO_PADRAO);
+
+                    if(Float.isNaN(raio) || raio==0){//se por algum motivo tiver NaN, fica o padrao, ta aqui mais por precaucao
+                        localAPersistir.setRaio(Local.RAIO_PADRAO);
+                    }else{
+                        localAPersistir.setRaio(raio);
+                    }
+
                     if (!chave.isChecked()) {
                         localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
                     } else {
@@ -375,7 +390,13 @@ public class NewLocalActivity extends AppCompatActivity {
                     localAPersistir.setLatitude(localizacaoSelecionada.latitude);
                     localAPersistir.setLongitude(localizacaoSelecionada.longitude);
                     localAPersistir.setNome(tituloCaixa.getEditableText().toString());
-                    localAPersistir.setRaio(Local.RAIO_PADRAO);
+
+                    if(Float.isNaN(raio) || raio==0){//se por algum motivo tiver NaN, fica o padrao, ta aqui mais por precaucao
+                        localAPersistir.setRaio(Local.RAIO_PADRAO);
+                    }else{
+                        localAPersistir.setRaio(raio);
+                    }
+
                     if (!chave.isChecked()) {
                         localAPersistir.setTempo(inicioEscolhido + ";" + finalEscolhido);
                     } else {
@@ -419,10 +440,13 @@ public class NewLocalActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //comentando aqui para lembrar de testar depois: se usario for editar, dai desistir, a latitude e longitude ficam nulas? bom verificar
         if (requestCode == PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK) {
             localizacaoSelecionada = data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
             Bitmap b = data.getExtras().getParcelable(Local.KEY_THUMBNAIL);
+            raio = (float)data.getDoubleExtra(Local.KEY_RAIO,Local.RAIO_PADRAO);
             adicionarMapTumbnail(b);
         }
     }
+
 }

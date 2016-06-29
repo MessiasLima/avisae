@@ -54,7 +54,7 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
 //        }
 //        holder.enabledSwitch.setChecked(enabled);
 
-        switch (local.getImagem()){
+        /*switch (local.getImagem()){
             case 1:
                 holder.backgroundImageView.setImageResource(R.drawable.ic_1);
                 break;
@@ -67,7 +67,7 @@ public class LocalCustomAdapter extends RecyclerView.Adapter<LocalViewHolder> {
             case 4:
                 holder.backgroundImageView.setImageResource(R.drawable.ic_4);
                 break;
-        }
+        }*/
         holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
