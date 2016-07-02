@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public ProgressDialog progressDialog;
     GeofencingManager geofencingManager;
+    LinearLayout linearLayoutMensagemSemLocais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         cl = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        linearLayoutMensagemSemLocais = (LinearLayout) findViewById(R.id.liner_layout_mensagem_sem_locais);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +131,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         recyclerView.setAdapter(customAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Log.i("Numero Itens",locals.size()+" itens");
+
+        if (locals.size()==0){
+            linearLayoutMensagemSemLocais.setVisibility(View.VISIBLE);
+        }else {
+            linearLayoutMensagemSemLocais.setVisibility(View.GONE);
+        }
+
+
         atualizarGeofences(locals);
     }
 

@@ -32,6 +32,8 @@
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
     <string name="certeza_excluir">Tem certeza que deseja excluir</string>
+    <string name="sem_locais_titulo">Você ainda não adicionou nenhum lembrete</string>
+    <string name="sem_locais_mensagem">Clique no botão flutuante para adicionar um novo lembrete e ser avisado quando chegar ao destino escolhido</string>
     <string name="cancelar">Cancelar</string>
     <string name="erro_verifique_campos">Verifique se os campos estão preenchidos</string>
     <string name="erro_salvar_thumbnail">Erro ao salvar a miniatura do mapa</string>
