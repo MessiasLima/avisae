@@ -35,7 +35,6 @@ public class LocalDetail extends AppCompatActivity {
         Toolbar tb = (Toolbar)findViewById(R.id.barraLembrete);
         setSupportActionBar(tb);
         ActionBar ac = getSupportActionBar();
-        ac = getSupportActionBar();
         ac.setTitle("");
         ac.setDefaultDisplayHomeAsUpEnabled(true);
         ac.setDisplayUseLogoEnabled(true);
