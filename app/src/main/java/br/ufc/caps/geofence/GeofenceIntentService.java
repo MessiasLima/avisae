@@ -15,6 +15,7 @@ import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.Calendar;
 
+import br.ufc.caps.activity.LocalDetail;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.util.NotificationUtil;
 
@@ -42,19 +43,27 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
                     if (local.getAviso() == Local.NOTIFICACAO) {
                         NotificationUtil.sendNotification(local.getNome(), local.getTexto(), this, local);
                     } else {
-                        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
-                        i.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
-                        i.putExtra(AlarmClock.EXTRA_HOUR, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-                        i.putExtra(AlarmClock.EXTRA_MINUTES, Calendar.getInstance().get(Calendar.MINUTE) + 1);
-                        i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+                        Intent intentClock = new Intent(AlarmClock.ACTION_SET_ALARM);
+                        intentClock.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
+                        intentClock.putExtra(AlarmClock.EXTRA_HOUR, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                        intentClock.putExtra(AlarmClock.EXTRA_MINUTES, Calendar.getInstance().get(Calendar.MINUTE) + 1);
+                        intentClock.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+                        intentClock.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        Intent intentDetail = new Intent(this, LocalDetail.class);
+                        intentDetail.putExtra(Local.KEY, local);
+                        intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(intentClock);
+                        Log.i("Intent Service", "Disparou Relogio");
+                        startActivity(intentDetail);
+                        Log.i("Intent Service", "Disparou Activity");
                     }
                     local.setAtivo(Local.FALSO);
                     try {
                         database.atualizar(local);
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
             }

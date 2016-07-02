@@ -30,7 +30,8 @@ public class LocalDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_detail);
-        Local local = (Local) getIntent().getExtras().getSerializable(Local.KEY);
+        Bundle extras = getIntent().getExtras();
+        Local local = (Local) extras.getSerializable(Local.KEY);
         Toolbar tb = (Toolbar)findViewById(R.id.barraLembrete);
         setSupportActionBar(tb);
         ActionBar ac = getSupportActionBar();
