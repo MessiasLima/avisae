@@ -34,6 +34,7 @@
     <string name="certeza_excluir">Tem certeza que deseja excluir</string>
     <string name="cancelar">Cancelar</string>
     <string name="erro_verifique_campos">Verifique se os campos estão preenchidos</string>
+    <string name="erro_salvar_thumbnail">Erro ao salvar a miniatura do mapa</string>
     <string name="carregando">Carregando...</string>
     <string name="tempo">Tempo:</string>
     <string name="local_escolhido">Local Escolhido</string>

@@ -1,7 +1,6 @@
 package br.ufc.caps.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
@@ -21,17 +20,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.FileOutputStream;
-
 import br.ufc.caps.R;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.geofence.Local;
+import br.ufc.caps.util.FileUtil;
 
 public class NewLocalActivity extends AppCompatActivity {
 
@@ -58,6 +55,7 @@ public class NewLocalActivity extends AppCompatActivity {
     private LatLng localizacaoSelecionada;
     private boolean editar = false;
     private ImageView mapThumbnail;
+    private Bitmap mapThumbnailBitmap;
     private float raio;
 
     @Override
@@ -171,6 +169,11 @@ public class NewLocalActivity extends AppCompatActivity {
                 bt4.setColorFilter(Color.argb(0, 255, 255, 255));
                 break;
         }
+
+        //Thubnail do Mapa
+        mapThumbnailBitmap = FileUtil.retrieveBitmap(localAPersistir.getNome(),this);
+        setMapThumbnail(mapThumbnailBitmap);
+
     }
 
     public void clickBtn1(View v) {
@@ -341,6 +344,11 @@ public class NewLocalActivity extends AppCompatActivity {
                 return false;
             }
 
+            //Sanvando Thubnail do mapa aqui
+            if(!FileUtil.saveBitmap(mapThumbnailBitmap,tituloCaixa.getEditableText().toString(),this)){
+                Snackbar.make(tituloCaixa, R.string.erro_salvar_thumbnail, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
 
             BD bd = new BD(this);
             int id = item.getItemId();
@@ -432,7 +440,7 @@ public class NewLocalActivity extends AppCompatActivity {
         return true;
     }
 
-    public void adicionarMapTumbnail(Bitmap b) {
+    public void setMapThumbnail(Bitmap b) {
         mapThumbnail.setImageBitmap(b);
         escolherLocalButton.setHeight(200);
         escolherLocalButton.setText("");
@@ -443,9 +451,9 @@ public class NewLocalActivity extends AppCompatActivity {
         //comentando aqui para lembrar de testar depois: se usario for editar, dai desistir, a latitude e longitude ficam nulas? bom verificar
         if (requestCode == PEGAR_LOCALIZACAO_REQUEST_CODE && resultCode == RESULT_OK) {
             localizacaoSelecionada = data.getExtras().getParcelable(Local.KEY_LOCALIZACAO);
-            Bitmap b = data.getExtras().getParcelable(Local.KEY_THUMBNAIL);
+            mapThumbnailBitmap = data.getExtras().getParcelable(Local.KEY_THUMBNAIL);
             raio = (float)data.getDoubleExtra(Local.KEY_RAIO,Local.RAIO_PADRAO);
-            adicionarMapTumbnail(b);
+            setMapThumbnail(mapThumbnailBitmap);
         }
     }
 

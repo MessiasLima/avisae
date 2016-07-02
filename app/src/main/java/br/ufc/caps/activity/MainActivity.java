@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mostraCardsNaTela();
-        Log.e("chegou no on result","chegooooooooooooooooooooooooooooooooooooooooooooooooooou!");
         if (requestCode == 2 && resultCode == RESULT_OK) {
             String mensagem = data.getStringExtra("mensagemPersistencia");
             if (mensagem != null) {
