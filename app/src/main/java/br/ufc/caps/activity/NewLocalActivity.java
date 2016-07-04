@@ -387,7 +387,7 @@ public class NewLocalActivity extends AppCompatActivity {
                         setResult(RESULT_OK, getIntent());
                         finish();
                     } catch (SQLException e) {
-                        Snackbar barra = Snackbar.make(clanl, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
+                        Snackbar barra = Snackbar.make(tituloCaixa, R.string.erro_persistencia_adicionar, Snackbar.LENGTH_LONG);
                         barra.show();
                     }
                 } else {// se é pra editar, e nao adicionar

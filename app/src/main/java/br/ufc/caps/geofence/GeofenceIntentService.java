@@ -13,8 +13,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
+import org.joda.time.LocalTime;
+
 import java.util.Calendar;
 
+import br.ufc.caps.R;
 import br.ufc.caps.activity.LocalDetail;
 import br.ufc.caps.database.BD;
 import br.ufc.caps.util.NotificationUtil;
@@ -95,23 +98,39 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
     }
 
     private boolean isDentroDoHorario(Local local) {
-        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        minute = Calendar.getInstance().get(Calendar.MINUTE);
         if (local.getTempo().equals("--")) {
             return true;
         } else {
             String[] hours = local.getTempo().split(";");
             int initialHour = Integer.parseInt(hours[0].split(":")[0]);
             int initialMinute = Integer.parseInt(hours[0].split(":")[1]);
-            if (hour >= initialHour && minute >= initialMinute) {
-                int finalHour = Integer.parseInt(hours[1].split(":")[0]);
-                int finalMinute = Integer.parseInt(hours[1].split(":")[1]);
-                if (hour <= finalHour && minute <= finalMinute) {
-                    return true;
-                }
-            }
-            return false;
+            int finalHour = Integer.parseInt(hours[1].split(":")[0]);
+            int finalMinute = Integer.parseInt(hours[1].split(":")[1]);
 
+            hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            minute = Calendar.getInstance().get(Calendar.MINUTE);
+
+            LocalTime now = new LocalTime(hour, minute);
+            LocalTime initialTime = new LocalTime(initialHour, initialMinute);
+            LocalTime finalTime = new LocalTime(finalHour, finalMinute);
+            LocalTime endDay = new LocalTime(23, 59);
+            LocalTime beginDay = new LocalTime(0, 0);
+
+            if (finalTime.isAfter(initialTime)) {
+                return isBetweenSimpleComparison(initialTime, finalTime, now);
+            } else {
+                boolean b = (isBetweenSimpleComparison(initialTime, endDay, now) || isBetweenSimpleComparison(beginDay, finalTime, now));
+                String x = getString(R.string.carregando);
+                return b;
+            }
         }
     }
+
+    private boolean isBetweenSimpleComparison(LocalTime initialTime, LocalTime finalTime, LocalTime actualTime) {
+        if (actualTime.isAfter(initialTime) && actualTime.isBefore(finalTime)) {
+            return true;
+        }
+        return false;
+    }
+
 }
