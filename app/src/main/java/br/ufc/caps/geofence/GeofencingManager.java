@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class GeofencingManager {
 
-    private String TAG = "GEOFENCING MANAGER";
+
     // Request code to attempt to resolve Google Play services connection failures.
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static GeofencingManager instance;

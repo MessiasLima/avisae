@@ -41,7 +41,7 @@ public class TurnOnBroadcastReceiver extends BroadcastReceiver implements Google
         Log.i(getClass().getSimpleName(),"Entrou no OnConnected");
         BD bd = new BD(context);
         MainActivity mainActivity = MainActivity.getInstance();
-        mainActivity.atualizarGeofences(bd.buscar(), googleApiClient);
+        mainActivity.atualizarGeofences(bd.buscar(), googleApiClient,context);
     }
 
     @Override

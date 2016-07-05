@@ -1,6 +1,7 @@
 package br.ufc.caps.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
 
-        atualizarGeofences(locals, googleApiClient);
+        atualizarGeofences(locals, googleApiClient,this);
     }
 
     @Override
@@ -180,8 +181,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    public void atualizarGeofences(List<Local> locals, GoogleApiClient googleApiClient) {
-        geofencingManager = GeofencingManager.getInstance(this, googleApiClient);
+    public void atualizarGeofences(List<Local> locals, GoogleApiClient googleApiClient, Context context) {
+        geofencingManager = GeofencingManager.getInstance(context, googleApiClient);
         for (Local local : locals) {
             Geofence localGeofence = local.getGeofence();
             geofencingManager.addGeofence(localGeofence);

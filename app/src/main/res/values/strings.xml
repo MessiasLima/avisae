@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">C.A.P.S.</string>
+    <string name="app_name">AvisaÊ</string>
     <string name="titulo_activity_local_adicionar">Adicionar Local</string>
     <string name="titulo_activity_local_editar">Editar Local</string>
     <string name="bluetooth_not_available">BLuetooth não disponível</string>
