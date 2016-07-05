@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">C.A.P.S.</string>
+    <string name="app_name">AvisaÊ</string>
     <string name="titulo_activity_local_adicionar">Adicionar Local</string>
     <string name="titulo_activity_local_editar">Editar Local</string>
-    <string name="bluetooth_not_available">BLuetooth não disponível</string>
+    <string name="bluetooth_not_available">Bluetooth não disponível</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="salvar">Salvar</string>
     <string name="fechar">Fechar</string>
@@ -26,15 +26,24 @@
     <string name="sucesso_persistencia_editar">Aviso editado com sucesso!</string>
     <string name="erro_persistencia_editar">Um erro ocorreu ao editar o aviso!</string>
     <string name="erro_nome_nao_valido">Insira um título para o aviso!</string>
-    <string name="title_activity_escolher_local">Change Location</string>
+    <string name="title_activity_escolher_local">Escolher Local</string>
     <string name="local_selecionado">Deseja definir este local para o lembrete?</string>
     <string name="confirmar">Confirmar</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
     <string name="certeza_excluir">Tem certeza que deseja excluir</string>
+    <string name="sem_locais_titulo">Você ainda não adicionou nenhum lembrete</string>
+    <string name="sem_locais_mensagem">Clique no botão flutuante para adicionar um novo lembrete e ser avisado quando chegar ao destino escolhido</string>
     <string name="cancelar">Cancelar</string>
-    <string name="erro_verifique_campos">Verifique se os campos estão preenchidos</string>
+    <string name="erro_verifique_campos">Verifique se todos os campos estão preenchidos</string>
+    <string name="erro_salvar_thumbnail">Erro ao salvar a miniatura do mapa</string>
     <string name="carregando">Carregando...</string>
     <string name="tempo">Tempo:</string>
     <string name="local_escolhido">Local Escolhido</string>
+    <string name="raio">Raio</string>
+    <string name="selecione_local">Nenhum local selecionado, toque na tela para selecionar um local</string>
+    <string name="adicionar_local">Adicionar Local</string>
+    <string name="editar_local">Editar Local</string>
+    <string name="titulo">Título</string>
+
 </resources>
