@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public ProgressDialog progressDialog;
     GeofencingManager geofencingManager;
     LinearLayout linearLayoutMensagemSemLocais;
+    static MainActivity instance;
+
+    public static MainActivity getInstance() {
+        if (instance == null) {
+            instance = new MainActivity();
+        }
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (requestCode == 2 && resultCode == RESULT_OK) {
             String mensagem = data.getStringExtra("mensagemPersistencia");
             if (mensagem != null) {
-                Log.e("msg","entrou aqui");
+                Log.e("msg", "entrou aqui");
                 if (mensagem.equals("sa")) {
                     Snackbar barra = Snackbar.make(cl, R.string.sucesso_persistencia_adicionar, Snackbar.LENGTH_LONG);
                     barra.show();
@@ -132,16 +140,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Log.i("Numero Itens",locals.size()+" itens");
+        Log.i("Numero Itens", locals.size() + " itens");
 
-        if (locals.size()==0){
+        if (locals.size() == 0) {
             linearLayoutMensagemSemLocais.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             linearLayoutMensagemSemLocais.setVisibility(View.GONE);
         }
 
 
-        atualizarGeofences(locals);
+        atualizarGeofences(locals, googleApiClient);
     }
 
     @Override
@@ -172,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    public void atualizarGeofences(List<Local> locals) {
+    public void atualizarGeofences(List<Local> locals, GoogleApiClient googleApiClient) {
         geofencingManager = GeofencingManager.getInstance(this, googleApiClient);
         for (Local local : locals) {
             Geofence localGeofence = local.getGeofence();

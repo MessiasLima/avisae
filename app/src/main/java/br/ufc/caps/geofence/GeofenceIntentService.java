@@ -120,7 +120,6 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
                 return isBetweenSimpleComparison(initialTime, finalTime, now);
             } else {
                 boolean b = (isBetweenSimpleComparison(initialTime, endDay, now) || isBetweenSimpleComparison(beginDay, finalTime, now));
-                String x = getString(R.string.carregando);
                 return b;
             }
         }
