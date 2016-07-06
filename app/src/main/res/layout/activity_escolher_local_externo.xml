@@ -17,19 +17,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#556f716d"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#9dffffff"
         android:layout_gravity="bottom|right">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_weight="0.13"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:layout_marginLeft="8dp"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/raio"/>
+        <SeekBar
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:id="@+id/seekbar"
+            android:layout_weight="0.74"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:id="@+id/textoRaioDist"
+            android:layout_weight="0.13"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--
         <LinearLayout
             android:layout_width="94dp"
             android:layout_height="50dp"
@@ -51,6 +72,6 @@
                 android:textSize="18dp"
                 android:color="#78efefef"
                 android:onClick="diminuiRaio"/>
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </FrameLayout>

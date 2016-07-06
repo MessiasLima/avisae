@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,6 +44,8 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
     private SupportMapFragment mapFragment;
     private Circle circuloRaio;
     private ActionBar ac;
+    private SeekBar sb;
+    private TextView textoRaio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +61,46 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         ac.setDisplayUseLogoEnabled(true);
         ac.setDisplayHomeAsUpEnabled(true);
         textView = (TextView) findViewById(R.id.ref);
+        sb = (SeekBar)findViewById(R.id.seekbar);
+        addEscutadoresSB();
+        textoRaio = (TextView)findViewById(R.id.textoRaioDist);
+    }
+
+    private void addEscutadoresSB() {
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(circuloRaio!=null){
+                    if(progress<4){
+                        circuloRaio.setRadius(Local.RAIO_MINIMO);
+                        textoRaio.setText(Local.RAIO_MINIMO+" m");
+                        return;
+                    }
+                    circuloRaio.setRadius(progress*6);
+                    textoRaio.setText(progress*6+" m");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mMap.setPadding(0,0,0,80);
         if(getIntent().hasExtra(Local.KEY_LOCALIZACAO)){
             Local localRecebido = (Local)getIntent().getSerializableExtra(Local.KEY_LOCALIZACAO);
             if(localRecebido!=null){
                 ac.setTitle(R.string.editar_local);
                 localSelecionado = new LatLng(localRecebido.getLatitude(), localRecebido.getLongitude());
                 marcador = mMap.addMarker(new MarkerOptions().position(localSelecionado));
+                sb.setProgress(Math.round(localRecebido.getRaio()/6));
+                textoRaio.setText(Math.round(localRecebido.getRaio())+" m");
                 circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(localRecebido.getRaio()).strokeColor(Color.BLACK).fillColor(Color.argb(30, 51, 204, 255)).strokeWidth(2));
             }else{
                 ac.setTitle(R.string.adicionar_local);
@@ -97,6 +128,8 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
                 if (marcador == null) {
                     marcador = mMap.addMarker(new MarkerOptions().position(latLng));
                     circuloRaio = mMap.addCircle(new CircleOptions().center(localSelecionado).radius(Local.RAIO_PADRAO).strokeColor(Color.BLACK).fillColor(Color.argb(30, 51, 204, 255)).strokeWidth(2));
+                    sb.setProgress(Math.round(Local.RAIO_PADRAO/6));
+                    textoRaio.setText(Math.round(Local.RAIO_PADRAO)+" m");
                 } else {
                     marcador.setPosition(latLng);
                     circuloRaio.setCenter(localSelecionado);
@@ -164,7 +197,7 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         finish();
     }
 
-    public void aumentaRaio(View v){
+    /*public void aumentaRaio(View v){
         if(circuloRaio!=null && circuloRaio.getRadius()<Local.RAIO_MAXIMO){
             circuloRaio.setRadius(circuloRaio.getRadius()+20);
         }
@@ -174,5 +207,5 @@ public class EscolherLocalActivity extends AppCompatActivity implements OnMapRea
         if(circuloRaio!=null && circuloRaio.getRadius()>Local.RAIO_MINIMO){
             circuloRaio.setRadius(circuloRaio.getRadius()-20);
         }
-    }
+    }*/
 }
