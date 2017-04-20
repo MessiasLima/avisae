@@ -46,4 +46,7 @@
     <string name="titulo_activity_local_adicionar">Add Location</string>
     <string name="titulo_activity_local_editar">Edit Location</string>
     <string name="titulo">Title</string>
+    <string name="main_ad_id" translatable="false">ca-app-pub-3124052078905914/3859889782</string>
+    <string name="novolocal_ad_id">ca-app-pub-3124052078905914/5057421382</string>
+    <string name="interstitial_ad">ca-app-pub-3124052078905914/9487620989</string>
 </resources>

@@ -23,6 +23,8 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.maps.model.LatLng;
 
 import br.ufc.caps.R;
@@ -95,6 +97,10 @@ public class NewLocalActivity extends AppCompatActivity {
             recadoCaixa.setText(localAPersistir.getTexto());
             iniciaConfiguracoesModoEditar();
         }
+
+        AdView adView = (AdView) findViewById(R.id.new_local_adview);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     private void initComponents() {

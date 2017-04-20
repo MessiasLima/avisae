@@ -1,9 +1,11 @@
 package br.ufc.caps.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.provider.AlarmClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,12 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.Calendar;
 
 import br.ufc.caps.R;
 import br.ufc.caps.geofence.Local;
@@ -40,7 +48,35 @@ public class LocalDetail extends AppCompatActivity {
         ac.setDisplayUseLogoEnabled(true);
         ac.setBackgroundDrawable(new ColorDrawable(Color.argb(70, 0, 0, 0)));
         initScreen(local);
+        initAlarm(local);
+        showAd();
+    }
 
+    private void showAd() {
+        final InterstitialAd interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad));
+        AdRequest adRequest = new AdRequest.Builder().build();
+        interstitialAd.loadAd(adRequest);
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+               interstitialAd.show();
+            }
+        });
+
+    }
+
+    private void initAlarm(Local local) {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        Intent intentClock = new Intent(AlarmClock.ACTION_SET_ALARM);
+        intentClock.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
+        intentClock.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        intentClock.putExtra(AlarmClock.EXTRA_MINUTES, minute + 1);
+        intentClock.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+        intentClock.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intentClock);
+        Log.i("Alarme", "Iniciado");
     }
 
     private void initScreen(Local local) {

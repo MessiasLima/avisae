@@ -23,7 +23,7 @@ import br.ufc.caps.database.BD;
 import br.ufc.caps.util.NotificationUtil;
 
 public class GeofenceIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private String TAG = "GEOFENCING INTENT SERVICE";
+    private String TAG = "GEOFENCING SERVICE";
     private int hour;
     private int minute;
 
@@ -39,7 +39,7 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
         GeofencingEvent geoFenceEvent = GeofencingEvent.fromIntent(intent);
         if (geoFenceEvent.hasError()) {
             int errorCode = geoFenceEvent.getErrorCode();
-            Log.e(TAG, "Location Services error: " + errorCode);
+            Log.e(TAG, "error: " + errorCode);
         } else {
             for (Geofence geofence : geoFenceEvent.getTriggeringGeofences()) {
                 BD database = new BD(this);
@@ -78,27 +78,18 @@ public class GeofenceIntentService extends IntentService implements GoogleApiCli
         if (local.getAviso() == Local.NOTIFICACAO) {
             NotificationUtil.sendNotification(local.getNome(), local.getTexto(), this, local);
         } else {
-            Intent intentClock = new Intent(AlarmClock.ACTION_SET_ALARM);
-            intentClock.putExtra(AlarmClock.EXTRA_MESSAGE, local.getTexto());
-            intentClock.putExtra(AlarmClock.EXTRA_HOUR, hour);
-            intentClock.putExtra(AlarmClock.EXTRA_MINUTES, minute + 1);
-            intentClock.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-            intentClock.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
             Intent intentDetail = new Intent(this, LocalDetail.class);
             intentDetail.putExtra(Local.KEY, local);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            startActivity(intentClock);
-            Log.i("Intent Service", "Disparou Relogio");
             startActivity(intentDetail);
-            Log.i("Intent Service", "Disparou Activity");
         }
 
     }
 
     private boolean isDentroDoHorario(Local local) {
         if (local.getTempo().equals("--")) {
+            hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            minute = Calendar.getInstance().get(Calendar.MINUTE);
             return true;
         } else {
             String[] hours = local.getTempo().split(";");
