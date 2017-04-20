@@ -99,7 +99,10 @@ public class NewLocalActivity extends AppCompatActivity {
         }
 
         AdView adView = (AdView) findViewById(R.id.new_local_adview);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest
+                .Builder()
+                //.addTestDevice("9B9BD4351E83CB69B20A3B4A951F3ADE")
+                .build();
         adView.loadAd(adRequest);
     }
 

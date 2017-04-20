@@ -55,7 +55,10 @@ public class LocalDetail extends AppCompatActivity {
     private void showAd() {
         final InterstitialAd interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getString(R.string.interstitial_ad));
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest
+                .Builder()
+                //.addTestDevice("9B9BD4351E83CB69B20A3B4A951F3ADE")
+                .build();
         interstitialAd.loadAd(adRequest);
         interstitialAd.setAdListener(new AdListener() {
             @Override
