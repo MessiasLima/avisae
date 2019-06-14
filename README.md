@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/MessiasLima/avisae.svg?branch=master)](https://travis-ci.org/MessiasLima/avisae)
 # AvisaÊ
 ## English
 With the AvisaÊ application, you can put reminders where you go and be warned when you go there
