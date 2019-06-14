@@ -16,4 +16,5 @@ deploy:
   api_key: $GITHUB_KEY
   file: "app/build/outputs/apk/debug/app-debug.apk"
   skip_cleanup: true
-  draft: true
+  on:
+    tags: true
