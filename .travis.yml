@@ -9,3 +9,11 @@ android:
     - build-tools-28.0.3
     - android-23
     - android-28
+    - support-v4
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_KEY
+  file: "app/build/outputs/apk/debug/app-debug.apk"
+  skip_cleanup: true
+  draft: true

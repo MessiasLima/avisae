@@ -65,7 +65,6 @@ public class NewLocalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_local);
         ActionBar ac = getSupportActionBar();
-        ac.setDefaultDisplayHomeAsUpEnabled(true);
         ac.setDisplayUseLogoEnabled(true);
         ac.setDisplayHomeAsUpEnabled(true);
 
